@@ -1,53 +1,14 @@
----
-theme: dashboard
-title: Events networks
----
+import * as Plot from "npm:@observablehq/plot";
+import * as d3 from "npm:d3";
 
 
-# Women's events networks
+// not working...
 
-- zoom and drag the whole graph to focus on parts of the network
-- drag individual nodes to get a better view of their links.
-- only women with at least 3 event attendances have a visible name label, but you can see all the other names on hovering. 
+export function eventsNetworkChart(data) {
 
-
-
-<div class="card">
-    ${resize((width) => chart(json, {width}))}
-</div>
-
-
-
-```js
-// can't use <div class="grid grid-cols-1"> as usual, overflows instead of cropping; find out how to fix problem... though it seems ok without it?
-```
-
-About the network 
-
-- created from events data as analysed at [BN Notes events analysis](https://beyond-notability.github.io/bn_notes/posts/events-2024-02-26/).
-- it's an *association network* 
-	- this type of network is created by connecting nodes that belong to a "group", rather than from direct *interactions* (like senders and recipients of letters)
-	- this involves some potentially risky assumptions; just because two people went to the same conference doesn't necessarily mean they knew each other, although it does imply related interests
-	- [there is interesting stuff about this from research on [animal networks](https://dshizuka.github.io/networkanalysis/networktypes_socialnetworks.html#constructing-networks-from-associations)]
-- here the links have been created on the basis of attendance *at the same event instance* (fuller explanation of "instances" at the BN Notes post, but it's either a one-off event like a named conference or a single dated occurrence of a recurring event like an annual meeting)
-
-About the graph
-- [d3 force-directed graph for disconnected graphs](https://observablehq.com/@asgersp/force-directed-graph-disjoint) (designed to "prevent detached subgraphs from escaping the viewport")
-- todo: filters...
-- Size of nodes reflects a person's overall number of attendances. [or is it number of links? *check code*] 
-- Width of connecting lines reflects the number of connections between a pair. (NB few people here have more than one or two connections)
-- Completely isolated nodes were removed from the network. 
-- Node colours represent groups detected by R. [maybe do toggle between algorithms, if I can] *check which algorithm is being used* I'm still experimenting a bit but most of the algorithms available seem to give very similar results. (It's worth looking out for people who have links to more than one group even if they don't have many links, eg Alice Edleston.)
-
-
-
-
-```js
-// https://richardbrath.wordpress.com/2018/11/24/using-font-attributes-with-d3-js/
- 
-function chart(data) {
 
 const height = 900;
+const width = 800;
 const color = d3.scaleOrdinal(d3.schemeCategory10);
 
   // The force simulation mutates links and nodes, so create a copy
@@ -165,14 +126,9 @@ const color = d3.scaleOrdinal(d3.schemeCategory10);
   }  
   
   //display(svg.node() );
-  
-  return svg.node();
-  
-}
-```
+	 return svg.node();
 
 
-```js
 // helper function for drag interaction
 
 function drag(simulation) {
@@ -200,11 +156,8 @@ function drag(simulation) {
       .on("end", dragended);
 }
 
-```
 
 
-
-```js
 
 function getRadius(useCasesCount){
 		//var	m=useCasesCount/1.5
@@ -216,31 +169,9 @@ function getRadius(useCasesCount){
   }
   return 5
 }
-```
 
 
 
 
-```js
-// editables
-
-//const plotTitle = "The ages at which BN women had children, sorted by mothers' dates of birth";
-
-//const plotHeight = 1500;
-```
-
-```js
-// Import components. can't get this working.
-//import {eventsNetworkChart} from "./components/networks.js";
-```
-
-
-
-```js
-
-// events data. group col is grp2, grp3, grp4 otherwise should match mis examples.
-const json = FileAttachment("data/l_networks_events/bn-events.json").json();
-```
-
-
+}
 

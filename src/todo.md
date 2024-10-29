@@ -48,16 +48,14 @@ Education
 Residence
 --------
 
-(maybe?)
 - examples of people with gaps: look at place data between those gaps, does it help explain absent residence data? 
 
 
 Networks
 -------
 
-- use events network
-- needs d3 :-0
-- needs filters :-S
-- needs to be componentised
-- needs explanatory notes
+- filters 
+- better labels
+- highlight connections by clicking on a node
+- componentize if possible
 
