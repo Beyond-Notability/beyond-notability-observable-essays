@@ -14,7 +14,7 @@ Summary of pages
 2. Childbirth and other activities before and after
 3. Higher education and degrees timeline 
 4. Something about residence and gaps in it [WIP] 
-6. Networks around excavation; if there is enough data. [analysis WIP] 
+6. Networks around events [WIP] 
 
 Other pages retained (for now) for reference. 
 
@@ -47,7 +47,7 @@ Education
 
 - custom d3 shapes? (esp for start/end pairs)
 - better sharing code between the two tables 
-
+- add BM timeline (needs to be componentised)
 
 Residence
 --------
@@ -62,13 +62,9 @@ notes
 Networks
 -------
 
-- will need d3 for any network graphs... could avoid having network graphs at all... :-0
-- analysis of SAL elections started but work to do on change over time (excavation networks mostly done)
+- use events network
+- needs d3 :-0
+- needs filters :-S
+- needs to be componentised
+- needs explanatory notes
 
-
-Other pages
-----------
-
-(lower priority)
-
-BM page should be componentized.
