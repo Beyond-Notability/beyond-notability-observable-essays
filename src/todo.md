@@ -4,8 +4,6 @@ title: Todo
 toc: true
 ---
 
-It might soon be time to separate data essays and other pages out into two separate sites.
-What to call the data essays site???
 
 Summary of pages
 ------
@@ -16,9 +14,6 @@ Summary of pages
 4. Something about residence and gaps in it [WIP] 
 6. Networks around events [WIP] 
 
-Other pages retained (for now) for reference. 
-
-Updated 12/8/24 to use Github Actions.
 
 
 All the dates
