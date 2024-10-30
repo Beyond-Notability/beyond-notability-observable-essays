@@ -77,7 +77,10 @@ What do we see?
 Data in the aggregate. But we don't want to aggregate. Brining in examples of people with gaps: look at place data between those gaps, does it help explain absent residence data?
 
 
+## to add
 
+- Reading Room records as access to temporary local residence in London
+- we can assume not loads of movement ---- n residences as a proxy for some stability, not everything in flux
 
 
 
