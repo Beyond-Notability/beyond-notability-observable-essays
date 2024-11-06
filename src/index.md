@@ -55,4 +55,6 @@ toc: false
 
 Experimenting with Observable Framework.
 
+This is the front page. More soon.
+
 
