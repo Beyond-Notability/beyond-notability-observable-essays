@@ -18,7 +18,7 @@ Also - echoing RESIDENCE - types of date: award PIT or latest date; education id
 
 ## The Plot
 
-Talk through data. Talk through what it 'shows'. Toggle changes narrative?
+Talk through plot (education above the line, degrees below the line)
 
 
 ```js
@@ -32,12 +32,26 @@ const makeToggleView = view(makeToggle);
   </div>
 </div>
 
+Talk through what it 'shows'.
 
+1. Women attended university before, in most cases, they were able to receive degrees.
+2. The 'modern' university system of contiguous education followed by a degree award emerges from the plot. Good record keeping = good data.
+3. Clear basis through which to think about networks of co-occurence, places of study as places of mutual experience and knowledge.
+4. The 'modern' university system also emerges via women entering uni between 18 and 20, and being educated over a short period of time (toggle for 'age' to see this).
+5. PG harder to see --- often in award rather than study
 
 ## Towards research questions
 
-What was the nature, scale and distribution of women's work in these fields?
-What do the records reveal about the extent and character of women's intellectual networks and how these facilitated or constrained their activities?
+Draw us towards two BN research questions:
+
+- What was the nature, scale and distribution of women's work in these fields?
+- What do the records reveal about the extent and character of women's intellectual networks and how these facilitated or constrained their activities?
+
+Here we take education as a form of 'work', endeavours that pre-figured some kind of career in arch, hist, heritage. Education data in our wikibase suggests formalisation in nature, increase in scale, and a distribution ever focused into ox/camb women's colleges.
+
+Records reveal temptation to use co-occurance at a HEI as proxy for networks, even if other forms of networks more revealing --- e.g. papers/classes taken - especially at UoL - as tutorial related networks; period at places of advanced study/research such as BSA and the networks that enabled women to go.
+
+They also - plotted - lead towards temptation to say that women were no constrained by ox/camb not giving degrees, but that would be naive reading of this data presented in isolation, need to take this data in richer context.
 
 ```js
 // editables
