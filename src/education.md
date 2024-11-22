@@ -20,7 +20,14 @@ Also - echoing RESIDENCE - types of date: award PIT or latest date; education id
 
 ## The Plot
 
-Talk through plot (education above the line, degrees below the line)
+To plot this data, we took a similar approach as we did for [motherhood](https://beyond-notability.github.io/beyond-notability-observable-essays/mothers.html). The plot shows each women for which we have '[educated at](https://beyond-notability.wikibase.cloud/wiki/Property:P94)' and/or '[academic degree](https://beyond-notability.wikibase.cloud/wiki/Item:Q2315)' statements. Each woman is represented by a single row. The rows are sorted by date of birth, with the earliest at the top and the latest at the bottom. The right hand end of the row represents the last piece of data on the graph (rather than a data of death). Each row then shows number of pieces of information:
+
+- Year of birth, represented by a white ring on each row.
+- Sitting on top of each row, any '[point in time](https://beyond-notability.wikibase.cloud/wiki/Property:P1)' (as a triangle), '[start time](https://beyond-notability.wikibase.cloud/wiki/Property:P27)' (as a yellow diamond), '[end time](https://beyond-notability.wikibase.cloud/wiki/Property:P28)' (as a green diamond), or '[latest date](https://beyond-notability.wikibase.cloud/wiki/Property:P51)' (as a star) data relating to '[educated at](https://beyond-notability.wikibase.cloud/wiki/Property:P94)' statements.
+- Where there are statements with matching '[start times](https://beyond-notability.wikibase.cloud/wiki/Property:P27)' and '[end times](https://beyond-notability.wikibase.cloud/wiki/Property:P28)', a white bar to represent continuous education.
+- Hanging below each row, '[point in time](https://beyond-notability.wikibase.cloud/wiki/Property:P1)' (as a triangle), '[start time](https://beyond-notability.wikibase.cloud/wiki/Property:P27)' (as a yellow diamond), '[end time](https://beyond-notability.wikibase.cloud/wiki/Property:P28)' (as a green diamond), or '[latest date](https://beyond-notability.wikibase.cloud/wiki/Property:P51)' (as a star) data relating to '[academic degree](https://beyond-notability.wikibase.cloud/wiki/Item:Q2315)' statements.
+- Intersecting lines representing the years in which the Universities of London (1878), Oxford (1920), and Cambridge (1948) began awarding degrees to women.
+- A toggle to switch between a default view that presents the data using dates on the X-axis and a second view that presents the data using ages on the X-axis.
 
 
 ```js
