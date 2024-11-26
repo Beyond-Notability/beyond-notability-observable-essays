@@ -70,7 +70,7 @@ About the graph options, measures, etc
 
 - Nodes are coloured according to whether a node was in both networks, events only, or committees only
 - "Link weight" is the number of connections made between a pair of nodes
-- Node size reflects the number of nodes a node is connected to ("degree") (but see note below)
+- Node size reflects the number of connections a node has ("degree") (but see note below)
 - "Appearances" (in tooltips) measures the number of events/committees appeared in (the relationship between degree and appearances can vary considerably depending on the size of an event/committee or duration of service)
 
 
