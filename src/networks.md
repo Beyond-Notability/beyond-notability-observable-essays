@@ -174,6 +174,17 @@ function degreeRadius(r) {
       }
   	}	
   	
+
+
+function groupWeight(g) {
+  if (pickGroup === "committees") {
+    return d => d.committees_weight;
+      } else if (pickGroup === "events") {
+    return d => d.events_weight;
+      } else {
+		return d => d.both_weight;	
+      }
+  	}	
 ```
 
 
@@ -181,7 +192,7 @@ function degreeRadius(r) {
 
 function chartHighlight(chartData) {
 
-const height = 600
+const height = 700
 
 
   const links = chartData.links.map(d => Object.create(d));
@@ -267,7 +278,7 @@ agents
 
   const simulation = d3.forceSimulation()
     .force("link", d3.forceLink().id( function(d) { return d.id; } ).strength(0.3)) 
-		.force("charge", d3.forceManyBody().strength(-300) ) //
+		.force("charge", d3.forceManyBody().strength(-150) ) //
 		.force("center", d3.forceCenter( 0,0 ))
 		
 		// avoid (or reduce) overlap. TODO work with degreeRadius... not sure how
@@ -285,8 +296,9 @@ agents
       .join("line")
       //.classed('link', true) // aha now width works.
       .attr("stroke", "#bdbdbd") 
-      .attr("stroke-opacity", 0.4) // is this working? works with attr instead of style
-      .attr("stroke-width", d => d.value) ;
+      .attr("stroke-opacity", 0.4)
+      .attr("stroke-width", d => d.value)
+      .attr("stroke-width", groupWeight(d => d))  ;
           
       
   
@@ -752,6 +764,14 @@ json.nodes
 
 
 const dataLinks = json.links
+	.map((d) => (
+	{...d,
+	both_weight: d.weights[0].all,
+	events_weight: (d.weights[0].events != undefined) ? d.weights[0].events : [],
+	committees_weight: (d.weights[0].committees != undefined) ? d.weights[0].committees : []
+	})
+	);
+
 
 const data = {nodes: dataNodes, links: dataLinks}
 ```
