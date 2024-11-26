@@ -1,7 +1,6 @@
 ---
 theme: dashboard
 title: Education
-toc: false
 ---
 
 # Education, education, education
