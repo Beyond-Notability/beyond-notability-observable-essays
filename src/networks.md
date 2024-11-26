@@ -8,7 +8,16 @@ title: Networks
 
 VERY PROVISIONAL. lots of work to do.
 
+including:
 
+- improve colours and add a legend
+- adjust initial zoom setting
+- slightly slower/smoother transitions
+- adjust collision
+- link weight = width of lines, varies with network viewed
+- link weight filter (and other things) varies with network being viewed
+- toggle node size between degree and betweenness centrality (maybe)
+- add all the credits
 
 
 ```js
@@ -57,6 +66,18 @@ const weightConnections = view(
 
 
 
+About the graph options, measures, etc
+
+- Nodes are coloured according to whether a node was in both networks, events only, or committees only
+- "Link weight" is the number of connections made between a pair of nodes
+- Node size reflects the number of nodes a node is connected to ("degree") (but see note below)
+- "Appearances" (in tooltips) measures the number of events/committees appeared in (the relationship between degree and appearances can vary considerably depending on the size of an event/committee or duration of service)
+
+
+Completely isolated nodes were removed from the network. 
+
+NB re node size: these are rescaled so that nodes with a *very* large number of connections are reduced a bit and modes with very few are a minimum size (otherwise they'd be barely visible). 
+
 
 ```js
 // can't use <div class="grid grid-cols-1"> as usual, overflows instead of cropping; find out how to fix problem... though it seems ok without it?
@@ -64,24 +85,29 @@ const weightConnections = view(
 
 About the network(s)
 
-- created from events data as analysed at [BN Notes events analysis](https://beyond-notability.github.io/bn_notes/posts/events-2024-02-26/). TODO add served on link.
-- *association networks* 
-	- this type of network is created by connecting nodes that belong to a "group", rather than from direct *interactions* (like senders and recipients of letters)
-	- this involves some potentially risky assumptions; just because two people went to the same conference doesn't necessarily mean they knew each other, although it does imply related interests
-	- [there is interesting stuff about this from research on [animal networks](https://dshizuka.github.io/networkanalysis/networktypes_socialnetworks.html#constructing-networks-from-associations)]
-- here the links have been created on the basis of a) events: attendance *at the same event instance* (fuller explanation of "instances" at the BN Notes post, but it's either a one-off event like a named conference or a single dated occurrence of a recurring event like an annual meeting); b) committees: same organisation, same year.
+created from
+- events data as analysed at [BN Notes events analysis](https://beyond-notability.github.io/bn_notes/posts/events-2024-02-26/)
+- committees analysis - TODO add BN Notes link.
 
-About the graph
-- filter both networks, events or committees
-- filter link weight TODO link weight for filters (currently shows all)
-- Size of nodes reflects a person's number of connections TODO MAYBE switch between degree and centrality 
-- Width of connecting lines reflects the number of connections between a pair.
-- Completely isolated nodes were removed from the network. 
+slightly different criteria for association for the two networks - reflects different nature of activity but might make comparability questionable
+
+- to make a link for events: requires attendance at the same event (same date)
+- to make a link for committees: same organisation in the same year (note concept of a "service year"). making two assumptions: a) service can be more ongoing than attending an event, and b) implies a stronger engagement with the organisation and other members. (but for large organisations (like SAL or RAI) this could be a riskier assumption.)
+
+
+
+*association networks* 
+
+- this type of network is created by connecting nodes that belong to a "group", rather than from direct *interactions* (like senders and recipients of letters)
+- this involves some potentially risky assumptions; eg just because two people went to the same conference doesn't necessarily mean they knew each other
+	- [there is interesting stuff about this from research on [animal networks](https://dshizuka.github.io/networkanalysis/networktypes_socialnetworks.html#constructing-networks-from-associations)]
 
 
 
 Credits
 - [d3 force-directed graph for disconnected graphs](https://observablehq.com/@asgersp/force-directed-graph-disjoint) (designed to "prevent detached subgraphs from escaping the viewport")
+
+more to add
 
 
 

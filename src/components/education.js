@@ -22,7 +22,7 @@ const symbolTime = Plot.scale({
 	});
 	
 //const plotHeight = 6000;
-const plotMarginTop = 10;
+const plotMarginTop = 20;
 const plotMarginLeft = 180;
 
     	//TODO a bit more space between top X axis labels and first rule?
@@ -54,12 +54,12 @@ export function educatedYearsChart(data, {width}, titleYear, plotHeight) {
     height: plotHeight,
     marginTop: plotMarginTop,
     marginLeft: plotMarginLeft,
-
     	
     x: {
     	grid: true, 
+
     	//label: "year of event", 
-    	tickFormat: d3.format('d'),
+    	//tickFormat: d3.format('d'), // overruled by plot.axis
     	//axis: "both" // "both" top and bottom of graph. null for nothing. when this = "both" the label only shows at the bottom, but when set to "top" the label is at the top...  seems you have to do Plot.axis to get it the way you want.
     	}, 
     	
@@ -77,6 +77,8 @@ export function educatedYearsChart(data, {width}, titleYear, plotHeight) {
      // NEAR REPETITION
       Plot.axisX({anchor: "top", 
       						label: "year of event", 
+      						labelOffset: 35,
+      						tickPadding: 8,
       						tickFormat: d3.format('d')}
       						),
       Plot.axisX({anchor: "bottom", 
@@ -119,13 +121,40 @@ export function educatedYearsChart(data, {width}, titleYear, plotHeight) {
       
     // notable degree dates highlighted
     // TODO tip/label of some sort.
-      Plot.ruleX([1878], {stroke:"blue", strokeOpacity: 0.2, strokeWidth:2}), // UoL degrees. 
-      //Plot.tip([1878], {y:1878, rotate:-90, anchor: "top", fontSize:12, dx:-1, text: (d) => `1878 london` }), // ???? or Plot.text ?
+      Plot.ruleX([1878], {dy:-5, stroke:"#e97451", strokeOpacity: 0.4, strokeWidth:2}), // UoL degrees. 
+      Plot.tip([`London`],
+      {
+      	x: 1878, frameAnchor:"top", 
+        dy: -3, dx:-3, 
+      	anchor: "right", //pointerSize:4, 
+      	textPadding:2, 
+      	fill: null, 
+      	//stroke: null
+      	}
+    ),
       
-      Plot.ruleX([1920], {stroke: "green", strokeOpacity: 0.2, strokeWidth:2}), // oxford
-    
-      Plot.ruleX([1948], {stroke: "purple", strokeOpacity: 0.2, strokeWidth:2}), // cambridge
-      
+      Plot.ruleX([1920], {dy:-5, stroke: "#004488", strokeOpacity: 0.2, strokeWidth:2}), // oxford
+      Plot.tip([`Oxford`],
+      {
+      	x: 1920, frameAnchor:"top", 
+        dy: -3, dx:3, 
+      	anchor: "left", //pointerSize:4, 
+      	textPadding:2, 
+      	fill: null, 
+      	//stroke: null
+      	}
+    ),    
+      Plot.ruleX([1948], {stroke: "#AA3377", strokeOpacity: 0.2, strokeWidth:2}), // cambridge
+      Plot.tip([`Cambridge`],
+      {
+      	x: 1948, frameAnchor:"top", 
+        dy: -3, dx:3, 
+      	anchor: "left", //pointerSize:4, 
+      	textPadding:2, 
+      	fill: null, 
+      	//stroke: null
+      	}
+    ),         
       
       // DOTS
       
@@ -292,6 +321,8 @@ export function educatedAgesChart(data, {width}, titleAge, plotHeight) {
     	// NEAR REPETITION
     	Plot.axisX({anchor: "top", 
       						label: "age at event", 
+      						labelOffset: 35,
+      						tickPadding: 8,      
       						tickFormat: d3.format('d')}
       						),
       Plot.axisX({anchor: "bottom", 

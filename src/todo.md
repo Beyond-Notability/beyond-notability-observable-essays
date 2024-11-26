@@ -8,12 +8,19 @@ toc: true
 Summary of pages
 ------
 
-1. All the dates data, with filters for categories
+1. All the dates data
 2. Childbirth and other activities before and after
 3. Higher education and degrees timeline 
 4. Something about residence and gaps in it 
-6. Networks around events [WIP] 
+6. Networks [events and committee service] 
 
+
+General
+-------
+
+Find out how to toggle between dark and light mode so I can test how things look!
+
+Some nicer styling.
 
 
 All the dates
@@ -53,10 +60,5 @@ Residence
 Networks
 -------
 
-WIP
-
-- two networks
-- filters 
-- labels
-- highlight connections by clicking on a node
+various improvements needed.
 
