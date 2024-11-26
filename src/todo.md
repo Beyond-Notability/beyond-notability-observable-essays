@@ -19,13 +19,13 @@ Summary of pages
 All the dates
 ------------
  
-- category filters
+- category filters (maybe)
 
 
 Childbirth
 ----------
 
-- Plot.axis to show label at both top and bottom is not working (cf education) and Idk why (lowish priority: not essential but desirable given that it's a tall chart, and for consistency between similar charts)
+- Plot.axis to show label at both top and bottom is not working (cf education) and Idk why (should) (lowish priority: not essential but desirable given that it's a tall chart, and for consistency between similar charts)
 
 notes
 
@@ -40,22 +40,23 @@ notes
 Education
 --------
 
-- custom d3 shapes? (esp for start/end pairs)
-- better sharing code between the two tables 
-- add BM timeline (needs to be componentised)
+- WIP. add vertical key date lines (view by date only) TODO labels.
+- custom d3 shapes? (esp for start/end pairs) [maybe]
 
 
 Residence
 --------
 
-- examples of people with gaps: look at place data between those gaps, does it help explain absent residence data? 
+- examples of people with gaps: look at place data between those gaps, does it help explain absent residence data? [maybe]
 
 
 Networks
 -------
 
+WIP
+
+- two networks
 - filters 
-- better labels
+- labels
 - highlight connections by clicking on a node
-- componentize if possible
 

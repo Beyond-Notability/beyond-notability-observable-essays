@@ -114,14 +114,17 @@ export function educatedYearsChart(data, {width}, titleYear, plotHeight) {
     
     //  VERTICAL RULES
     
-    	// this should be *after* left-most Y rule 
+    	// this should be *after* left-most Y rule so it sits on top.
       Plot.ruleX([1830]), // makes X start at 1830. TODO earliest_year rather than hard coded? but needs to be 0 (or 5). leave it for the moment.
       
-    // notable degree dates (1920 etc) highlight? hmm.
+    // notable degree dates highlighted
     // TODO tip/label of some sort.
-     // Plot.ruleX([1878], {stroke:"pink"}), // UoL degrees. 
-      Plot.ruleX([1920], {stroke: "lightgreen"}), // oxford
-    //  Plot.ruleX([1948], {stroke: "lightblue"}), // cambridge
+      Plot.ruleX([1878], {stroke:"blue", strokeOpacity: 0.2, strokeWidth:2}), // UoL degrees. 
+      //Plot.tip([1878], {y:1878, rotate:-90, anchor: "top", fontSize:12, dx:-1, text: (d) => `1878 london` }), // ???? or Plot.text ?
+      
+      Plot.ruleX([1920], {stroke: "green", strokeOpacity: 0.2, strokeWidth:2}), // oxford
+    
+      Plot.ruleX([1948], {stroke: "purple", strokeOpacity: 0.2, strokeWidth:2}), // cambridge
       
       
       // DOTS
