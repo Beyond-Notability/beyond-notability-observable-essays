@@ -668,6 +668,7 @@ bn_group_pairs |>
   # keep the original edge1 and edge2 rather than renaming
   mutate(from=edge1, to=edge2) |>
   relocate(from, to) |>
+  # can't make final group here
   mutate(group="all")
 
 
@@ -708,8 +709,8 @@ bn_tbl_graph(
   bn_events_edges
 )   |>
   #filter(!node_is_isolated()) |> don't need this if you use bn_centrality.
-  bn_centrality() |>
-  bn_clusters()
+  bn_centrality() 
+#  bn_clusters()
 
 
 # make served network
@@ -717,16 +718,16 @@ bn_served_network <-
 bn_tbl_graph(
   bn_served_nodes, 
   bn_served_edges) |>
-  bn_centrality() |>
-  bn_clusters() 
+  bn_centrality() 
+#  bn_clusters() 
 
 
 # make group network
 bn_group_network <-
   bn_tbl_graph(bn_group_nodes, bn_group_edges) |>
   #filter(!node_is_isolated()) |> not needed if using bn_centrality
-  bn_centrality() |>
-  bn_clusters()
+  bn_centrality() 
+#  bn_clusters()
   
 
 
@@ -839,47 +840,42 @@ bind_rows(
       select(-group) |>
       group_by(person) |>
       # this gives events: [{}] and i think you only want events: {} but maybe you can work with it.
-      nest(events = c(nn, degree, degree_rank, betweenness_rank, grp_infomap, grp_leading_eigen)) |>
+      nest(events = c(nn, degree, degree_rank, betweenness_rank)) |> ##, grp_infomap, grp_leading_eigen
       ungroup() , by=c("person")
   ) |>
   left_join(
     bn_served_nodes_for_meta |>
       select(-group) |>
       group_by(person) |>
-      nest(committees = c(nn, degree, degree_rank, betweenness_rank, grp_infomap, grp_leading_eigen)) |>
+      nest(committees = c(nn, degree, degree_rank, betweenness_rank)) |> ##, grp_infomap, grp_leading_eigen
       ungroup() , by=c("person")
   ) |>
   left_join(
     bn_group_nodes_for_meta |>
       select(-group) |>
       group_by(person) |>
-      nest(all = c(nn, degree, degree_rank, betweenness_rank, grp_infomap, grp_leading_eigen)) |>
+      nest(all = c(nn, degree, degree_rank, betweenness_rank)) |> ##, grp_infomap, grp_leading_eigen
       ungroup() , by=c("person")
   ) 
+
 
 bn_edges_meta <-
   bind_rows(
   bn_events_edges_for_meta,
   bn_served_edges_for_meta
 )  |>
-  select(edge1, edge2, group) |>
-  # groups as a list-column, for filtering. events, committees only. probalby not really needed here.
-  group_by(edge1, edge2) |>
-  arrange(group, .by_group = T) |>
-  summarise(groups=list(group), .groups = "drop_last") |>
-  ungroup() |>
-  left_join(
-    bind_rows(
-      bn_events_edges_for_meta,
-      bn_served_edges_for_meta,
-      bn_group_edges_for_meta
-    )  |>
       select(edge1, edge2, group, weight) |>
-      pivot_wider(id_cols = c(edge1, edge2), names_from = group, values_from = weight) |>
-      group_by(edge1, edge2) |>
-      nest(weights =c(events, committees, all)) |>
-      ungroup(), by=c("edge1", "edge2")
-  )  
+  pivot_wider(id_cols = c(edge1, edge2), names_from = group, values_from = weight, names_prefix = "weight_") |>
+  mutate(group = case_when(
+    is.na(weight_committees) ~ "events",
+    is.na(weight_events) ~ "committees",
+    .default = "both"
+    ) ) |>
+  mutate(weight_both = case_when(
+    group=="events" ~ weight_events,
+    group=="committees" ~ weight_committees,
+    .default = weight_committees + weight_events
+  )) 
 
 
 # adjust so person=id and name is used as label only. i think should only affect labels/tooltips.
@@ -888,11 +884,10 @@ bn_group_nodes_d3 <-
 bn_group_network |>
   activate(nodes) |>
   as_tibble() |>
-  # keep some of the all data for all for the moment, so it won't break completely...
-  #select(person, nn, degree, grp_infomap, group) |>
+  # drop most of the top level metadata.
+  select(person, nn, group) |>
   inner_join(bn_person_list, by="person") |>
-  mutate(name_label = if_else(degree>3, name, NA)) |>
-  #add nodes metadata. still need groups.
+  #nested nodes metadata. 
   left_join(bn_nodes_meta, by="person") |>
   mutate(id=person) |>
   relocate(id) |>
@@ -900,11 +895,14 @@ bn_group_network |>
 
 
 
+
 bn_group_edges_d3 <-
 bn_group_network |>
   activate(edges) |>
   as_tibble() |>
-  select(edge1, edge2, weight) |>
+  # don't use weight here
+  select(edge1, edge2) |>
+  # group should be in here now...
   left_join(bn_edges_meta, by=c("edge1", "edge2")) |>
   rename(source=edge1, target=edge2)
 
@@ -917,7 +915,7 @@ list(
      )  
      
     
-bn_two_nodes_meta_json <-
-bind_rows(
-  bn_events_nodes_for_meta, bn_served_nodes_for_meta, bn_group_nodes_for_meta) |>
-  rename(id=person)
+#bn_two_nodes_meta_json <-
+#bind_rows(
+#  bn_events_nodes_for_meta, bn_served_nodes_for_meta, bn_group_nodes_for_meta) |>
+#  rename(id=person)

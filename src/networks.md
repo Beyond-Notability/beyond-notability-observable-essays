@@ -6,18 +6,20 @@ title: Networks
 
 # Women's networks
 
-VERY PROVISIONAL. lots of work to do.
+PROVISIONAL. lots of work to do.
 
 including:
-
 - improve colours and add a legend
 - adjust initial zoom setting
 - slightly slower/smoother transitions
 - adjust collision
+- toggle node size between degree and betweenness centrality (maybe) (will need to use rankings rather than measures)
+- add all the credits
+
+done
+- fixed some filtering errors (may not actually affect appearance of chart)
 - link weight = width of lines, varies with network viewed
 - link weight filter (and other things) varies with network being viewed
-- toggle node size between degree and betweenness centrality (maybe)
-- add all the credits
 
 
 ```js
@@ -28,7 +30,7 @@ const pickGroup = view(
 		Inputs.radio(
 				["both"].concat(data.nodes.flatMap((d) => d.groups)),
 				{
-				label: "network", 
+				label: "select network", 
 				value: "both", // default is both.
 				sort: true, 
 				unique: true
@@ -49,9 +51,9 @@ const maxWeight = d3.max(groupData.links.map(d => d.weight))
 const weightConnections = view(
 	Inputs.range(
 		[minWeight, maxWeight], {
-  		label: "Minimum link weight",
+  		label: "minimum link weight",
   		step: 1,
-  		value: 1 // default to min 1
+  		value: 2 // default to min 2
 		}
 	)
 )
@@ -112,80 +114,14 @@ more to add
 
 
 
-```js
-
-const groupNodes =
-data.nodes
-  .filter((d) =>  
-  		pickGroup === "both" ||  	
-  		d.groups.some((m) => pickGroup.includes(m)) // why m rather than d? no obvious difference. 
-  		)
-  .map((d) => ({...d})) //is this necessary?
-
-  
-// is this enough or do i need the extra step used in connectionsData?
-// if not why not?
-
-const groupLinks = data.links.filter(
-    (l) =>
-      groupNodes.some((n) => n.id === l.source) &&
-      groupNodes.some((n) => n.id === l.target)
-  );
-
-const groupData = {nodes:groupNodes, links: groupLinks}
-```
-
-
 
 
 ```js
-// links and nodes data for slider.  output = weightData
-
-const weightLinks = groupData.links.filter(l => l.weight >= weightConnections);
-const weightNodes = groupData.nodes.filter((n) =>
-    weightLinks.some((l) => l.source === n.id || l.target === n.id)
-  );
-const weightData = {nodes: weightNodes, links: weightLinks}
+// editables if any...
 
 ```
 
 
-
-```js
-
-function groupDegree(g) {
-  if (pickGroup === "committees") {
-    return d => d.committees_degree;
-      } else if (pickGroup === "events") {
-    return d => d.events_degree;
-      } else {
-		return d => d.both_degree;	
-      }
-  	}	
-
-
-function degreeRadius(r) {
-  if (pickGroup === "committees") {
-    return d => getRadius(d.committees_degree);
-      } else if (pickGroup === "events") {
-    return d => getRadius(d.events_degree);
-      } else {
-		return d => getRadius(d.both_degree);	
-      }
-  	}	
-  	
-
-
-function groupWeight(g) {
-  if (pickGroup === "committees") {
-    return d => d.committees_weight;
-      } else if (pickGroup === "events") {
-    return d => d.events_weight;
-      } else {
-		return d => d.both_weight;	
-      }
-  	}	
-```
 
 
 ```js
@@ -198,9 +134,9 @@ const height = 700
   const links = chartData.links.map(d => Object.create(d));
   const nodes = chartData.nodes.map(d => Object.create(d));
   
+  
     // Create the SVG container.
 
-  
   const svg = d3.create("svg")
       .attr("width", width)
       .attr("height", height)
@@ -225,40 +161,9 @@ const height = 700
   const isConnectedAsTarget = (a, b) => linkedByIndex[`${b},${a}`];
   const isConnected = (a, b) => isConnectedAsTarget(a, b) || isConnectedAsSource(a, b) || a === b;
   const isEqual = (a, b) => a === b;
-  // todo?
-  //const nodeRadius = d => 15 * d.support;
 
 
-/*
-// https://stackoverflow.com/a/66673220/7281022
-Let's say that you want your initial position and scale to be x, y, scale respectively.
 
-const zoom = d3.zoom();
-
-const svg = d3.select("#containerId")
-    .append("svg")
-    .attr("width", width)
-    .attr("height", height)
-    .call(zoom.transform, d3.zoomIdentity.translate(x, y).scale(scale)
-    .call(zoom.on('zoom', (event) => {
-        svg.attr('transform', event.transform);
-     }))
-    .append("g")
-    .attr('transform', `translate(${x}, ${y})scale(${k})`);
-
-.call(zoom.transform, d3.zoomIdentity.translate(x, y).scale(scale) makes sure that when the zoom event is fired, the event.transform variable takes into account the translation and the scale. The line right after it handles the zoom while the last one is used to apply the translation and the scale only once on "startup".
-
-
-agents
-
-  const root = svg.append("g").attr("id", "root");
-  
-  const transform = d3.zoomIdentity.translate(0, 0).scale(zoomLevel);
-  
-  root.attr("transform", transform);
-
-
-*/
 
 
   const baseGroup = svg.append("g");
@@ -268,7 +173,6 @@ agents
   }
 
   const zoom = d3.zoom()
-  	//.extent([[0,0],[500,300]]) // ?
     .scaleExtent([0.2, 8]) // limits how far in/out you can zoom.
     .on("zoom", zoomed);
   
@@ -281,11 +185,11 @@ agents
 		.force("charge", d3.forceManyBody().strength(-150) ) //
 		.force("center", d3.forceCenter( 0,0 ))
 		
-		// avoid (or reduce) overlap. TODO work with degreeRadius... not sure how
+		// avoid (or reduce) overlap.
 		.force("collide", d3.forceCollide().radius(d => getRadius(d) + 30).iterations(2))  
      
-      .force("x", d3.forceX())
-      .force("y", d3.forceY())
+      .force("x", d3.forceX(0.7))
+      .force("y", d3.forceY(0.7))
       ;
       
 		
@@ -297,8 +201,7 @@ agents
       //.classed('link', true) // aha now width works.
       .attr("stroke", "#bdbdbd") 
       .attr("stroke-opacity", 0.4)
-      .attr("stroke-width", d => d.value)
-      .attr("stroke-width", groupWeight(d => d))  ;
+      .attr("stroke-width", d => d.weight)  ;
           
       
   
@@ -308,11 +211,9 @@ agents
       .data(nodes)
       .join("circle")
       .classed('node', true)
-      .attr("r", degreeRadius(d=>d))
-      //.attr("r", d => getRadius(d.degree/2)) // can tweak.
-      //.attr("fill", clustering(d => d)) 
+      .attr("r", d => getRadius(d.degree)) // can tweak.
       .attr("fill", d => color(d.group))  
-      .style("fill-opacity", 0.6)  
+      .style("fill-opacity", 0.7)  
       .call(drag(simulation)); // this is what was missing for drag...
        
 
@@ -730,14 +631,15 @@ html
 
 
 ```js
-// editables if any
-
+// Import components. importing chart is complicated!
+import {drag} from "./components/networks.js";
 ```
 
 
+
+
 ```js
-// Import components. importing chart is complicated!
-import {drag} from "./components/networks.js";
+// DATA //
 ```
 
 
@@ -763,20 +665,67 @@ json.nodes
   })) 
 
 
-const dataLinks = json.links
-	.map((d) => (
-	{...d,
-	both_weight: d.weights[0].all,
-	events_weight: (d.weights[0].events != undefined) ? d.weights[0].events : [],
-	committees_weight: (d.weights[0].committees != undefined) ? d.weights[0].committees : []
-	})
-	);
+// don't need to do anything to json.links at this stage
 
 
-const data = {nodes: dataNodes, links: dataLinks}
+const data = {nodes: dataNodes, links: json.links}
 ```
 
 
+
+
+
+```js
+const groupNodes =
+data.nodes
+  .filter((d) =>  
+  		pickGroup === "both" ||  	
+  		d.groups.some((m) => pickGroup.includes(m)) // why m rather than d? no obvious difference. 
+  		)
+  		// select the right degree for the network.
+  .map((d) => ({...d,
+  		degree: // can rename this once you get rid of toplevel stuff
+			(pickGroup==="committees") ? d.committees_degree :  
+			(pickGroup=="events") ? d.events_degree :  
+		  d.both_degree  
+  })) 
+
+
+const groupLinks = data.links.filter(
+    (l) =>
+      groupNodes.some((n) => n.id === l.source) &&
+      groupNodes.some((n) => n.id === l.target) &&
+      // this looks terrible but i think it works.
+      (
+      (pickGroup=="both" & (l.group =="both" || l.group=="events" | l.group=="committees") ) || 
+      (pickGroup=="events" & (l.group=="both" || l.group=="events")) ||
+      (pickGroup=="committees" & (l.group=="both" || l.group=="committees"))
+      )
+  )
+  // select the right weight for the filter.
+  .map((d) => ({...d,
+  		weight: 
+			(pickGroup==="committees") ? d.weight_committees :  
+			(pickGroup=="events") ? d.weight_events :  
+		  d.weight_both
+  }))  ;
+
+const groupData = {nodes:groupNodes, links: groupLinks}
+```
+
+
+
+
+```js
+// links and nodes data for slider.  output = weightData
+
+const weightLinks = groupData.links.filter(l => l.weight >= weightConnections);
+const weightNodes = groupData.nodes.filter((n) =>
+    weightLinks.some((l) => l.source === n.id || l.target === n.id)
+  );
+const weightData = {nodes: weightNodes, links: weightLinks}
+
+```
 
 
 

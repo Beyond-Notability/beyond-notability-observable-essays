@@ -13,4 +13,3 @@ write_json(bn_two_json, "bn-two-networks.json")
 #write_json(bn_events_json, "bn-two-events-network.json")
 #write_json(bn_two_nodes_meta_json, "bn-two-nodes-meta.json")
 system("zip - -r .")
-
