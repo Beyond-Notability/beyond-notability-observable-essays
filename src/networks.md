@@ -214,7 +214,7 @@ const height = 700
       .attr("r", d => getRadius(d.degree)) // can tweak.
       .attr("fill", d => color(d.group))  
       .style("fill-opacity", 0.7)  
-      .call(drag(simulation)); // this is what was missing for drag...
+      .call(drag(simulation)); 
        
 
     
