@@ -6,26 +6,15 @@ title: Networks
 
 # Women's networks
 
-PROVISIONAL. lots of work to do.
+[still bits of work to do; see list below. but mostly done now.]
 
-including:
-- improve colours and add a legend
-- adjust initial zoom setting
-- slightly slower/smoother transitions
-- adjust collision
-- toggle node size between degree and betweenness centrality (maybe) (will need to use rankings rather than measures)
-- add all the credits
-
-done
-- fixed some filtering errors (may not actually affect appearance of chart)
-- link weight = width of lines, varies with network viewed
-- link weight filter (and other things) varies with network being viewed
 
 
 ```js
-//adjustment with flatmap seems to work here...
-//start with both selected 
-
+//FILTERS CODE 
+```
+```js
+//select network: start with both selected 
 const pickGroup = view(
 		Inputs.radio(
 				["both"].concat(data.nodes.flatMap((d) => d.groups)),
@@ -38,11 +27,9 @@ const pickGroup = view(
 		)
 )
 ```
-
-
-
 ```js 
-//slider - link weights. *after picking a group*. (although atm won't make any difference to min and max). when you switch networks it always resets to 1.
+//slider for min link weight. *after picking a group*. 
+//when you switch networks it always resets to 1. idk if this can be chagned
 
 // get min and max for slider range
 const minWeight = d3.min(groupData.links.map(d => d.weight));
@@ -58,8 +45,26 @@ const weightConnections = view(
 	)
 )
 ```
+```js
+//legend (standalone)
+//https://observablehq.com/d/a23f6e59f1380df0
 
+Plot.legend({
+  color: {
+    domain: colourDomain, 
+    range: colourRange ,
+    alpha: 0.8
+  },
+ // legend: "swatches",
+  //className: "alphabet",
+  swatchSize: 15,
 
+})
+
+```
+```js
+// END OF FILTERS CODE.
+```
 
 
 <div class="card">
@@ -68,22 +73,20 @@ const weightConnections = view(
 
 
 
+
 About the graph options, measures, etc
 
 - Nodes are coloured according to whether a node was in both networks, events only, or committees only
-- "Link weight" is the number of connections made between a pair of nodes
+- "Link weight" is the number of connections between a pair of nodes
 - Node size reflects the number of connections a node has ("degree") (but see note below)
 - "Appearances" (in tooltips) measures the number of events/committees appeared in (the relationship between degree and appearances can vary considerably depending on the size of an event/committee or duration of service)
-
 
 Completely isolated nodes were removed from the network. 
 
 NB re node size: these are rescaled so that nodes with a *very* large number of connections are reduced a bit and modes with very few are a minimum size (otherwise they'd be barely visible). 
 
 
-```js
-// can't use <div class="grid grid-cols-1"> as usual, overflows instead of cropping; find out how to fix problem... though it seems ok without it?
-```
+
 
 About the network(s)
 
@@ -98,7 +101,7 @@ slightly different criteria for association for the two networks - reflects diff
 
 
 
-*association networks* 
+On association networks
 
 - this type of network is created by connecting nodes that belong to a "group", rather than from direct *interactions* (like senders and recipients of letters)
 - this involves some potentially risky assumptions; eg just because two people went to the same conference doesn't necessarily mean they knew each other
@@ -108,8 +111,28 @@ slightly different criteria for association for the two networks - reflects diff
 
 Credits
 - [d3 force-directed graph for disconnected graphs](https://observablehq.com/@asgersp/force-directed-graph-disjoint) (designed to "prevent detached subgraphs from escaping the viewport")
+- [highlighting](https://observablehq.com/@ravengao/force-directed-graph-with-cola-grouping )
+- more to add...
 
-more to add
+
+TODO
+
+- toggle node size between degree and betweenness centrality (maybe) (will need to use rankings rather than measures, might not work)
+- add all the credits
+- more info in tooltips
+- adjust initial zoom setting (still a mystery)
+- slightly slower/smoother transitions (ditto)
+- minor niggle: how to put the legend in the same div as the chart
+
+done
+- as a sort of workaround for the zoom, changed default min link weight to 2, which gives better initial view 
+- adjust collision - I *think* this is working better
+- transitions are a bit better
+- improve colours and add a legend
+- fixed some filtering errors (may not actually affect appearance of chart)
+	- really fixed them this time!
+- link weight = width of lines, varies with network viewed
+- link weight filter (and other things) varies with network being viewed
 
 
 
@@ -117,14 +140,21 @@ more to add
 
 
 ```js
-// editables if any...
+// REST OF THE CODE STARTS HERE - don't edit anything after this point.
+```
 
+
+```js 
+// set up colour for chart and legend
+
+const  colourDomain = ["both", "committees", "events"];
+const  colourRange = ['#77AADD', '#BB5566',  '#F1932D'];
 ```
 
 
 
-
 ```js
+// make the chart
 
 function chartHighlight(chartData) {
 
@@ -135,25 +165,29 @@ const height = 700
   const nodes = chartData.nodes.map(d => Object.create(d));
   
   
-    // Create the SVG container.
+// Create the SVG container.
 
   const svg = d3.create("svg")
       .attr("width", width)
       .attr("height", height)
-//      .attr("viewBox", [0, 0, width, height])
       .attr("viewBox", [-width / 2, -height / 2, width, height]) // positioning within the box
       .attr("style", "max-width: 100%; height: auto;");
   
-  
+
+// link connections
+
+// need to use the right data here!!! honestly sharon.
+
   // create link reference
   let linkedByIndex = {};
-  data.links.forEach(d => {
+  
+  chartData.links.forEach(d => {
     linkedByIndex[`${d.source},${d.target}`] = true;
   });
   
   // nodes map
   let nodesById = {};
-  data.nodes.forEach(d => {
+  chartData.nodes.forEach(d => {
     nodesById[d.id] = {...d};
   })
 
@@ -163,11 +197,12 @@ const height = 700
   const isEqual = (a, b) => a === b;
 
 
-
-
+// start to draw stuff
 
   const baseGroup = svg.append("g");
-  
+ 
+// zoom function
+ 
   function zoomed() {
     baseGroup.attr("transform", d3.zoomTransform(this));
   }
@@ -180,19 +215,22 @@ const height = 700
   
   let ifClicked = false;
 
+// feel the force
+
   const simulation = d3.forceSimulation()
     .force("link", d3.forceLink().id( function(d) { return d.id; } ).strength(0.3)) 
 		.force("charge", d3.forceManyBody().strength(-150) ) //
 		.force("center", d3.forceCenter( 0,0 ))
 		
-		// avoid (or reduce) overlap.
+		// avoid (or at least reduce) overlap.
 		.force("collide", d3.forceCollide().radius(d => getRadius(d) + 30).iterations(2))  
      
       .force("x", d3.forceX(0.7))
       .force("y", d3.forceY(0.7))
       ;
       
-		
+
+// lines between nodes		
 
   const link = baseGroup.append("g")
       .selectAll("line")
@@ -204,7 +242,7 @@ const height = 700
       .attr("stroke-width", d => d.weight)  ;
           
       
-  
+// the circles  
 
   const node = baseGroup.append("g")
       .selectAll("circle")
@@ -212,7 +250,7 @@ const height = 700
       .join("circle")
       //.classed('node', true)
       .attr("r", d => getRadius(d.degree)) // check getRadius
-      .attr("fill", d => color(d.group))  
+      .attr("fill", d => colour(d.group))  
       //.style("fill-opacity", 0.7)  
       .attr("stroke", "black")
       .attr("stroke-width", 0.5)
@@ -220,7 +258,7 @@ const height = 700
        
 
     
-  // text labels 
+// text labels 
   // stuff has to be added in several places after this to match node and link.
  
  	const text = baseGroup.append("g")
@@ -262,7 +300,9 @@ const height = 700
 
   simulation.force("link")
       .links(links);
-  
+
+
+// functions to highlight connected nodes  
   
   const mouseOverFunction = (event, d) => {
     tooltip.style("visibility", "visible")
@@ -447,9 +487,9 @@ function getRadius(useCasesCount){
 }
 
 
-//const color = d3.scaleOrdinal(d3.schemeCategory10);
+//changed
+const colour = d3.scaleOrdinal(colourDomain, colourRange);
 
-const color = d3.scaleOrdinal(["both", "committees", "events"], ["#77AADD", "#EE8866", "#EECC66"]);
 ```
 
 
