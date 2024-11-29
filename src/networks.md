@@ -6,9 +6,34 @@ title: Networks
 
 # Women's networks
 
+*this is a work-in-progress data essay*
+
 [still bits of work to do; see list below. but mostly done now.]
 
+Creating linked data implies analysing networks, and analysing networks when DH researchers are involved implies making network graphs. Despite this, BN has made remarkably few attempts at analysing networks using network analysis - including network visualisation - techniques. Why? Because we had other proxies for networks: co-habitation, co-education, signatories on letters of nomination, local connections, work together on excavations. But as we started experimenting with ways to visualise data in our wikibase, one area that seemed particularly amenable to visualisation were networks relating to event participation and committee membership.
 
+## Wrangling the data
+
+- 'Event participation' bucket https://beyond-notability.github.io/bn_notes/posts/events-2024-02-26/ : most 'spoke at' and 'exhibited at', but includes event attendance and organistion.
+- 'Committee': this is 'served on'. 
+
+Making these into networks required slightly different criteria for association for the two networks - reflects different nature of activity but might make comparability questionable
+
+- to make a link for events: requires attendance at the same event (same date)
+- to make a link for committees: same organisation in the same year (note concept of a "service year"). making two assumptions: a) service can be more ongoing than attending an event, and b) implies a stronger engagement with the organisation and other members. (but for large organisations (like SAL or RAI) this could be a riskier assumption.). not sub-committee.
+
+## Visualising the network 
+
+About the graph options, measures, etc
+
+- Nodes are coloured according to whether a node was in both networks, events only, or committees only
+- "Link weight" is the number of connections between a pair of nodes. Default 2.
+- Node size reflects the number of connections a node has ("degree") (but see note below)
+- "Appearances" (in tooltips) measures the number of events/committees appeared in (the relationship between degree and appearances can vary considerably depending on the size of an event/committee or duration of service)
+
+Completely isolated nodes were removed from the network. 
+
+NB re node size: these are rescaled so that nodes with a *very* large number of connections are reduced a bit and modes with very few are a minimum size (otherwise they'd be barely visible). 
 
 ```js
 //FILTERS CODE 
@@ -71,41 +96,25 @@ Plot.legend({
     ${resize((width) => chartHighlight(weightData, {width}))}
 </div>
 
+## Reading a network
 
+This is maths + visual reorganisation to make it easier for us to see. Specifically, [d3 force-directed graph for disconnected graphs](https://observablehq.com/@asgersp/force-directed-graph-disjoint) (designed to "prevent detached subgraphs from escaping the viewport") As Ahnerts show, don't need network viz to analyse networks. So when we do, important to consider what we are actually doing: analysing a series of choices about modelling of historical reality (see [Education](https://beyond-notability.github.io/beyond-notability-observable-essays/education.html#modelling-education) post) through a series of mathemetical choices to organise that modelling as a network *and* a series of presentational choices re representing that modelling as a network. Got that. Good. Then we'll move on. So, what does it seem to be telling us:
 
+- networks of women in arch/hist/heri dominated by those who were both in committees and went to events, with a sub-network centred on Gomme and Goodrich-Fyer
+- those only on committees then closely connected to that network.
+- those only recorded at events then form the periphery.
+- no bridges between discrete networks: there is a centre, a periphery, and then isolated networks.
+- toggle to 'events' and then 'committees' that becomes more obvious, though MVT emerges as a bridge between a big node link Kenyon and people like Wheeler, Graham, Liddle and Lamb --- intergenerational node (?)
 
-About the graph options, measures, etc
+Thing is, if you change the data on the graph then different stories emerge. For example, set min link weight to one and zoom out a little, you see a big ball, with large nodes on one side, smaller nodes on other, and a mass of one-time connection event nodes. Here the interactive nature of our viz enables interpretation of bridges. For example hover on 'Margaret Alice Murray', and look at the leftward connection to Charlotte Sophia Burne and rightward connection to Kathleen Mary Kenyon. Reaches to the heart of two separate networks. And if you hover on Charlotte Sophia Burne you see that Murray is her only connection into the "main" network. Burne then seems an important bridge.
 
-- Nodes are coloured according to whether a node was in both networks, events only, or committees only
-- "Link weight" is the number of connections between a pair of nodes
-- Node size reflects the number of connections a node has ("degree") (but see note below)
-- "Appearances" (in tooltips) measures the number of events/committees appeared in (the relationship between degree and appearances can vary considerably depending on the size of an event/committee or duration of service)
+(add something here on burne)
 
-Completely isolated nodes were removed from the network. 
+## Association 
 
-NB re node size: these are rescaled so that nodes with a *very* large number of connections are reduced a bit and modes with very few are a minimum size (otherwise they'd be barely visible). 
+But what does this networking mean? What holds it together in reality?
 
-
-
-
-About the network(s)
-
-created from
-- events data as analysed at [BN Notes events analysis](https://beyond-notability.github.io/bn_notes/posts/events-2024-02-26/)
-- committees analysis - TODO add BN Notes link.
-
-slightly different criteria for association for the two networks - reflects different nature of activity but might make comparability questionable
-
-- to make a link for events: requires attendance at the same event (same date)
-- to make a link for committees: same organisation in the same year (note concept of a "service year"). making two assumptions: a) service can be more ongoing than attending an event, and b) implies a stronger engagement with the organisation and other members. (but for large organisations (like SAL or RAI) this could be a riskier assumption.)
-
-
-
-On association networks
-
-- this type of network is created by connecting nodes that belong to a "group", rather than from direct *interactions* (like senders and recipients of letters)
-- this involves some potentially risky assumptions; eg just because two people went to the same conference doesn't necessarily mean they knew each other
-	- [there is interesting stuff about this from research on [animal networks](https://dshizuka.github.io/networkanalysis/networktypes_socialnetworks.html#constructing-networks-from-associations)]
+Switch to events network. Move to link weight 8. Jessie MacGregor https://beyond-notability.wikibase.cloud/wiki/Item:Q970 and Rosa Wallis https://beyond-notability.wikibase.cloud/wiki/Item:Q508 connected. Why? Royal Ac Summer Exhit. So this is an *association* network. This type of network is created by connecting nodes that belong to a "group", rather than from direct *interactions* (like senders and recipients of letters, which historians are used to). This involves some potentially risky assumptions; eg just because two people went to the same conference doesn't necessarily mean they knew each other (there is interesting stuff about this from research on [animal networks](https://dshizuka.github.io/networkanalysis/networktypes_socialnetworks.html#constructing-networks-from-associations)). Weak at best. Proxy for association.
 
 
 
