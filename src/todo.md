@@ -12,7 +12,7 @@ Summary of pages
 2. Childbirth and other activities before and after
 3. Higher education and degrees timeline 
 4. Something about residence and gaps in it 
-6. Networks [events and committee service] 
+5. Networks [events and committee service] 
 
 
 General
@@ -20,7 +20,9 @@ General
 
 Find out how to toggle between dark and light mode so I can test how things look!
 
-Some nicer styling.
+nicer styling esp on front page!
+
+general credits
 
 
 All the dates
@@ -47,7 +49,6 @@ notes
 Education
 --------
 
-- WIP. add vertical key date lines (view by date only) TODO labels.
 - custom d3 shapes? (esp for start/end pairs) [maybe]
 
 
@@ -60,5 +61,5 @@ Residence
 Networks
 -------
 
-various improvements needed.
+- a few outstanding TODOs on the page
 

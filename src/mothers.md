@@ -51,7 +51,7 @@ This might seem a bit of a downer to end on. But - we think - there is considera
 
 Credits
 
-- [Observable Plot tick marks](https://observablehq.com/plot/marks/tick)
+- [Observable Plot tick mark](https://observablehq.com/plot/marks/tick)
 
 
 ## ignore this
