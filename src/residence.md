@@ -70,6 +70,18 @@ The result: two intriguing icebergs, two plots that begin to offer insights.
 In [our wikibase](https://beyond-notability.wikibase.cloud/) then, the women who shine brightly are those with one or a few dateable instances of [resided at](https://beyond-notability.wikibase.cloud/wiki/Property:P29) statements towards the beginning or end of the average life expentancy. The datable and locatable activities relating to these women are closely bonded to points in time at which we know their place of residence. This opens up questions that go beyond the plot, beyond taking women in aggregate. In the fields of archaeology, history, and heritage, how closely connected are the appearance of residences in archival records and the notability of the resident? Does that differ for men and women? And how does that map to other fields? How useful are the locations of activities women took part in as proxies for the continued 'truthiness' of a previous residence statement? And can [our wikibase](https://beyond-notability.wikibase.cloud/) be used to measure how the truthiness of residence data degraded over time? Finally, thinking of our last plot, what imaginations of the lifecourse - [education](https://beyond-notability.github.io/beyond-notability-observable-essays/education.html), [motherhood](https://beyond-notability.github.io/beyond-notability-observable-essays/mothers.html), old age - does this work with data invoke, and how far do they distract us from the real experience of the lifecourse, of places, and of 'work' as experienced by the women in [our wikibase](https://beyond-notability.wikibase.cloud/)?
 
 
+
+
+
+Credits
+
+- [Observable Plot dot mark](https://observablehq.com/plot/marks/dot)
+- [Observable Plot stack transform](https://observablehq.com/plot/transforms/stack)
+
+
+
+
+
 ```js
 // Import components
 import {residedTypesChart, residedEarlyLateBeeswarm, residedStackedDot, residedFacetedStackedDot} from "./components/resided.js";

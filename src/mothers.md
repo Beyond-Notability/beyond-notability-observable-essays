@@ -48,6 +48,12 @@ That is, visualising this particular combination of data and interpreting what w
 
 This might seem a bit of a downer to end on. But - we think - there is considerable merit to our approach to data capture. In particular by combining 'work' and 'life events' we open up linked data biography to asking better questions about the lifecourse as it relates to people of all genders. For example, in a forthcoming paper we argue that whilst the prevailing model for representing the life course as linked data - that is, the [Wikidata](https://www.wikidata.org/) data model - is adequate for representing the temporal relationship between most events across the lifecourse, it does a poor job with parenthood. That is, unless a person had a child who was themselves sufficiently notable to warrant a Wikidata entry, and in turn a date of birth, all other acts of childbirth on Wikidata are represented by [‘number of children’](https://www.wikidata.org/wiki/Property:P1971), a property that captures the number of children a person had – or has had so far – in their lifetime. This perspective disables the ability to see across and through life events. This in part can be explained by what is achievable through community and voluntary production of data using a platform such as Wikidata: a statement listing the number of children someone had will take considerably less time – and research – to implement than multiple statements recording the dates on which multiple children were born. But Wikidata is a central node within contemporary knowledge infrastructure. And by taking an atemporal viewpoint in some cases, whilst capturing granular temporal information in others, the model opens limited space for the rich, subtle, and granular conceptual changes required when researching and representing complex historical phenomena. This complexity is what our wikibase has sought to retain. As a result motherhood - where we are aware of it - relates to and is entangled other events in the lifecourse, with work in archaeology, history, and heritage; whatever that 'work' meant.
 
+
+Credits
+
+- [Observable Plot tick marks](https://observablehq.com/plot/marks/tick)
+
+
 ## ignore this
 
 Here is an inline note.^[Inlines notes are easier to write, since

@@ -40,6 +40,12 @@ Indeed, places of residence are particular interesting for considering the tempo
 
 
 
+Credits
+
+- [Observable Plot dodge transform](https://observablehq.com/plot/transforms/dodge)
+- [Observable Plot cheatsheets: colours](https://observablehq.com/@observablehq/plot-cheatsheets-colors)
+- [Don't use ordinal scales for dates](https://observablehq.com/@tophtucker/dont-use-ordinal-scales-for-dates)
+
 
 ```js 
 //editables

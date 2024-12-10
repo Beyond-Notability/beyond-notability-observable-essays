@@ -55,6 +55,14 @@ Two of the research questions that [Beyond Notability]https://beyondnotability.o
 
 If we take education as a form of 'work', as endeavours that pre-figured some kind of career in archaeology, history, and heritage, this plot of the education data in [our wikibase](https://beyond-notability.wikibase.cloud/) suggests that between the late-nineteenth and mid-twentieth centuries education in these fields was formalised in nature, increased in scale, and was concentrated on women's colleges at Oxford and Cambridge (though, the latter point may well be because those colleges have the most accurate and accessible data on students enrollments). In terms of what plot 'reveals' about women's intellectual networks, it offers a tempting proxy for networks in the from of temporal educational co-occurence: if women were in the same place at the same time receiving education in the same college then *maybe* they can be considered part of a network. But as we know from our research (and Katherine and Amara will discuss in [their forthcoming book](https://beyondnotability.org/publications/)) other proxies for networks are likely more revealing: the tutors women chose to work with and the individual classes chose to attend, or the time spent at places of postgraduate study and research, such as the [British School at Athens](https://beyond-notability.wikibase.cloud/wiki/Item:Q917), as well as the networks that enabled women to attend such institutions. Our education data also, when plotted this way, leads us towards the temptation that women's work in archaeology, history, and heritage was not constrainted by Oxford and Cambridge not awarding women degrees. In some cases that was clearly true: many women did make important contributions to these fields without being able to receive degress from the UKs most prestiguous educational institutions. But to read the data that way would be a naive interpretation of a plot presenting education data in isolation. Education does not take place in a vacuum. In the UK it is and was, as Mandler shows, intimately connected with how the state imagines itself and its aspirations. This plot might tell *a* story of how those imaginations and aspirations were refracted through a particular group of women's access to tertiary education (that is, 1920 and 1948 aren't the years to focus on), but above all it - we think - teases out the value of modelling data in ways that is attentive to historical specificity, the avenues of enquiry that emerge when data - is this case, education data - is taken as found and modelling accordingly. 
 
+
+Credits
+
+- [Observable Plot](https://observablehq.com/plot/getting-started)
+- [Observable Plot cheatsheets: colours](https://observablehq.com/@observablehq/plot-cheatsheets-colors)
+- [Radio input](https://observablehq.com/framework/inputs/radio)
+
+
 ```js
 // editables
 

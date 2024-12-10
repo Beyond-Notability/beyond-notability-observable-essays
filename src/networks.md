@@ -118,22 +118,26 @@ Switch to events network. Move to link weight 8. Jessie MacGregor https://beyond
 
 
 
-Credits
-- [d3 force-directed graph for disconnected graphs](https://observablehq.com/@asgersp/force-directed-graph-disjoint) (designed to "prevent detached subgraphs from escaping the viewport")
-- [highlighting](https://observablehq.com/@ravengao/force-directed-graph-with-cola-grouping )
-- more to add...
+Credits 
+- [Force-Directed Graph, Disjoint](https://observablehq.com/@asgersp/force-directed-graph-disjoint)
+- [Network Graph with d3.force grouping (for highlighting)](https://observablehq.com/@ravengao/force-directed-graph-with-cola-grouping )
+- [D3 Force-Directed Graph with Input](https://observablehq.com/@asgersp/d3-force-directed-graph-with-input)
+- [Drag Queens Netwerk Diagram](https://observablehq.com/d/f3941ff4743f26e3)
+- [Agents Network Visualisation](https://observablehq.com/@jmiguelv/radical-translations-agents-network-visualisation)
+- [Marvel Network](https://observablehq.com/@jrladd/marvel-network)
+- [Plot: Legends](https://observablehq.com/d/a23f6e59f1380df0)
 
 
 TODO
 
-- toggle node size between degree and betweenness centrality (maybe) (will need to use rankings rather than measures, might not work)
-- add all the credits
 - more info in tooltips
+- toggle node size between degree and betweenness centrality (maybe) (will need to use rankings rather than measures, might not work)
 - adjust initial zoom setting (still a mystery)
 - slightly slower/smoother transitions (ditto)
-- minor niggle: how to put the legend in the same div as the chart
+- minor niggle: how to put the filters/legend in the same div as the chart (or make them look as though they are)
 
 done
+- add all the credits
 - as a sort of workaround for the zoom, changed default min link weight to 2, which gives better initial view 
 - adjust collision - I *think* this is working better
 - transitions are a bit better
@@ -245,10 +249,9 @@ const height = 700
       .selectAll("line")
       .data(links)
       .join("line")
-      //.classed('link', true) // aha now width works.
       .attr("stroke", "#bdbdbd") 
       .attr("stroke-opacity", 0.4)
-      .attr("stroke-width", d => d.weight)  ;
+      .attr("stroke-width", d => d.weight) ;  // width of lines = link weight
           
       
 // the circles  
@@ -257,7 +260,6 @@ const height = 700
       .selectAll("circle")
       .data(nodes)
       .join("circle")
-      //.classed('node', true)
       .attr("r", d => getRadius(d.degree)) // check getRadius
       .attr("fill", d => colour(d.group))  
       //.style("fill-opacity", 0.7)  
@@ -465,14 +467,6 @@ const height = 700
 
 
 
-
-
-
-
-
-
-
-
 ```js
 const tooltip = d3.select("body").append("div")
   .attr("class", "svg-tooltip")
@@ -484,7 +478,7 @@ const tooltip = d3.select("body").append("div")
 
 
 ```js
-
+// 
 function getRadius(useCasesCount){
 		var	m=useCasesCount/3
 		var d=3/useCasesCount
@@ -566,6 +560,7 @@ import {drag} from "./components/networks.js";
 
 
 ```js
+// data from R processing
 const json = FileAttachment("./data/l_networks_two/bn-two-networks.json").json();
 
 ```
@@ -574,8 +569,9 @@ const json = FileAttachment("./data/l_networks_two/bn-two-networks.json").json()
 
 
 ```js
-// prepare data
+// prepare data for first filter
 // it feels like there ought to be a better way to add *_degree and suchlike to be usable, but this is the one I can work out how to do so.
+
 const dataNodes =
 json.nodes
   .map((d) => (
@@ -585,9 +581,7 @@ json.nodes
   		committees_degree: (d.committees[0] != undefined ) ? d.committees[0].degree : []	 
   })) 
 
-
 // don't need to do anything to json.links at this stage
-
 
 const data = {nodes: dataNodes, links: json.links}
 ```
@@ -597,11 +591,12 @@ const data = {nodes: dataNodes, links: json.links}
 
 
 ```js
+// choosing your network
 const groupNodes =
 data.nodes
   .filter((d) =>  
   		pickGroup === "both" ||  	
-  		d.groups.some((m) => pickGroup.includes(m)) // why m rather than d? no obvious difference. 
+  		d.groups.some((m) => pickGroup.includes(m)) 
   		)
   		// select the right degree for the network.
   .map((d) => ({...d,
@@ -610,7 +605,6 @@ data.nodes
 			(pickGroup=="events") ? d.events_degree :  
 		  d.both_degree  
   })) 
-
 
 const groupLinks = data.links.filter(
     (l) =>
@@ -638,7 +632,7 @@ const groupData = {nodes:groupNodes, links: groupLinks}
 
 
 ```js
-// links and nodes data for slider.  output = weightData
+// link weights filtering
 
 const weightLinks = groupData.links.filter(l => l.weight >= weightConnections);
 const weightNodes = groupData.nodes.filter((n) =>
