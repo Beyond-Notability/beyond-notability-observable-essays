@@ -22,12 +22,11 @@ Conflations and assumptions notwithstanding this gave us something we could visu
 
 ## Visualising the network 
 
-Network visualisation (or network graphs) are require a little explanation before we can dig into what they might well us. In this case
+Network visualisation (or network graphs) require a little explanation before we can dig into what they might well us. In this case we note the following features:
 
-About the graph options, measures, etc
-
-- Nodes are coloured according to whether a node was in both networks, events only, or committees only
-- "Link weight" is the number of connections between a pair of nodes. Default 2.
+- Each 'node' (the round blobs) represents an indvidual people. They are coloured according to whether the data - drawn from [our wikibase](https://beyond-notability.wikibase.cloud/wiki/Main_Page) - contains statements about individuals participating in events (yellow), served on committees (red), or both (both).
+- The size of each node reflects the number of connections between that node and another node (called "degree"). Note that in order to ensure legibility, node size is scaled: this reduces the relative size of very large nodes and increased the size of nodes with very few connection.
+- Each node is connected to one or more other nodes by 'edges', and the width of each edge (called "link weight") is determined by number of connections between a pair of nodes. In our visualisation, the default minimum link weight is two, meaning that nodes that connect to only one other node are filtered out (more on which later).
 - Node size reflects the number of connections a node has ("degree") (but see note below)
 - "Appearances" (in tooltips) measures the number of events/committees appeared in (the relationship between degree and appearances can vary considerably depending on the size of an event/committee or duration of service)
 
