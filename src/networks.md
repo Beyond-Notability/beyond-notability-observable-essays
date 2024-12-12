@@ -10,19 +10,19 @@ title: Networks
 
 [still bits of work to do; see list below. but mostly done now.]
 
-Creating linked data implies analysing networks, and analysing networks when DH researchers are involved implies making network graphs. Despite this, BN has made remarkably few attempts at analysing networks using network analysis - including network visualisation - techniques. Why? Because we had other proxies for networks: co-habitation, co-education, signatories on letters of nomination, local connections, work together on excavations. But as we started experimenting with ways to visualise data in our wikibase, one area that seemed particularly amenable to visualisation were networks relating to event participation and committee membership.
+Creating linked data implies analysing networks, and analysing networks when DH researchers are involved implies making network graphs. Despite this, the Beyond Notability project has made remarkably few attempts at analysing networks using network analysis technique, including network visualisation. The reason is that we had other proxies for networks in our data: co-habitation, co-education, co-location, co-working on publications or excacations, co-signing letters of nomination. But as we started putting together these data essays, one area that seemed particularly amenable to network visualisation were data relating to event participation and committee membership.
 
-## Wrangling the data
+## The data
 
-- 'Event participation' bucket https://beyond-notability.github.io/bn_notes/posts/events-2024-02-26/ : most 'spoke at' and 'exhibited at', but includes event attendance and organistion.
-- 'Committee': this is 'served on'. 
+This data, whilst related, had distinct origins. 'Event' data constitutes a series of statements relating to participation at events: this included people speaking, attending, organising, and exhibiting at events (see Sharon's [*PPA Events*](https://beyond-notability.github.io/bn_notes/posts/events-2024-02-26/) blog for more info). 'Committee' data is much more simple, represented only by those statements recording when people '[served on](https://beyond-notability.wikibase.cloud/wiki/Property:P102)' a committee of group.
 
-Making these into networks required slightly different criteria for association for the two networks - reflects different nature of activity but might make comparability questionable
+Making the data into networks of people required slightly different apporoaches to what consituted an association between two individuals. For 'Event' data, this required a qualifier two or more people at the same event at the same time, whether as the same type of participant - say, as both speakers or boht attendees - or different types of participat - say, one person was an organisers whilst another was an exhibitor. This type of association takes no account of how participants interacted, but rather takes co-location as a proxy for association (more on which later) For 'Committee' data, we chose to create a networkable association when two people served on a committee for the same association in the same year (thus creating the concept of a "service year"). This type of association relies on two assumptions: first, that service is more of an ongoing activity than participating in an event (which seems a reasonable assumption); and second, that committee membership involved engagement with other members (which for larger organisations like the [Society of Antiquaries of London](https://beyond-notability.wikibase.cloud/wiki/Item:Q8) or [Royal Archaeological Institute](https://beyond-notability.wikibase.cloud/wiki/Item:Q35) could be a risky assumption).
 
-- to make a link for events: requires attendance at the same event (same date)
-- to make a link for committees: same organisation in the same year (note concept of a "service year"). making two assumptions: a) service can be more ongoing than attending an event, and b) implies a stronger engagement with the organisation and other members. (but for large organisations (like SAL or RAI) this could be a riskier assumption.). not sub-committee.
+Conflations and assumptions notwithstanding this gave us something we could visualise as a network: the associations between people created by their participation at events and service on committees.
 
 ## Visualising the network 
+
+Network visualisation (or network graphs) are require a little explanation before we can dig into what they might well us. In this case
 
 About the graph options, measures, etc
 
