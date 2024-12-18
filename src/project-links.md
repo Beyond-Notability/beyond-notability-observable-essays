@@ -1,7 +1,6 @@
 ---
 theme: dashboard
 title: Project Links
-toc: true
 ---
 
 - [Beyond Notability Project Website](https://beyondnotability.org/)
