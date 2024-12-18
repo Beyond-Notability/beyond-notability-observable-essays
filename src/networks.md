@@ -4,15 +4,13 @@ title: Networks
 ---
 
 
-# Women's networks
+# Women's Networks
 
 *this is a work-in-progress data essay*
 
-[still bits of work to do; see list below. but mostly done now.]
-
 Creating linked data implies analysing networks, and analysing networks when DH researchers are involved implies making network graphs. Despite this, the Beyond Notability project has made remarkably few attempts at analysing networks using network analysis technique, including network visualisation. The reason is that we had other proxies for networks in our data: co-habitation, co-education, co-location, co-working on publications or excacations, co-signing letters of nomination. But as we started putting together these data essays, one area that seemed particularly amenable to network visualisation were data relating to event participation and committee membership.
 
-## The data
+## The Data
 
 This data, whilst related, had distinct origins. 'Event' data constitutes a series of statements relating to participation at events: this included people speaking, attending, organising, and exhibiting at events (see Sharon's [*PPA Events*](https://beyond-notability.github.io/bn_notes/posts/events-2024-02-26/) blog for more info). 'Committee' data is much more simple, represented only by those statements recording when people '[served on](https://beyond-notability.wikibase.cloud/wiki/Property:P102)' a committee of group.
 
@@ -20,19 +18,15 @@ Making the data into networks of people required slightly different apporoaches 
 
 Conflations and assumptions notwithstanding this gave us something we could visualise as a network: the associations between people created by their participation at events and service on committees.
 
-## Visualising the network 
+## Visualising the Network 
 
 Network visualisation (or network graphs) require a little explanation before we can dig into what they might well us. In this case we note the following features:
 
-- Each 'node' (the round blobs) represents an indvidual people. They are coloured according to whether the data - drawn from [our wikibase](https://beyond-notability.wikibase.cloud/wiki/Main_Page) - contains statements about individuals participating in events (yellow), served on committees (red), or both (both).
+- Each 'node' (the round blobs) represents an individual people. They are coloured according to whether the data - drawn from [our wikibase](https://beyond-notability.wikibase.cloud/wiki/Main_Page) - contains statements about individuals participating in events (yellow), served on committees (red), or both (both).
 - The size of each node reflects the number of connections between that node and another node (called "degree"). Note that in order to ensure legibility, node size is scaled: this reduces the relative size of very large nodes and increased the size of nodes with very few connection.
-- Each node is connected to one or more other nodes by 'edges', and the width of each edge (called "link weight") is determined by number of connections between a pair of nodes. In our visualisation, the default minimum link weight is two, meaning that nodes that connect to only one other node are filtered out (more on which later).
-- Node size reflects the number of connections a node has ("degree") (but see note below)
-- "Appearances" (in tooltips) measures the number of events/committees appeared in (the relationship between degree and appearances can vary considerably depending on the size of an event/committee or duration of service)
-
-Completely isolated nodes were removed from the network. 
-
-NB re node size: these are rescaled so that nodes with a *very* large number of connections are reduced a bit and modes with very few are a minimum size (otherwise they'd be barely visible). 
+- Each node is connected to one or more other nodes by 'edges', and the width of each edge (called "link weight") is determined by number of connections between a pair of nodes. In our visualisation, the default minimum link weight is two, meaning that nodes that connect to only one other node are filtered out (more on which later). All isolated notes (that is, representing instances where an individual participated in an event or served on a committee without that activity connecting to another individual) are removed.
+- Node size reflects the number of connections a node has ("degree"). The node size is scaled, meaning that nodes with a very large number of connections are reduced in size to aid legibility of the network visualisation.
+- Hovering over a node gives the number of 'appearances', a measure of the number of instances where an individual participated in an event or served on a committee. Note that this number may be larger than the number of connections between that node and another node ("degree") depending on the size of an event/committee or the duration of service.
 
 ```js
 //FILTERS CODE 
@@ -95,26 +89,23 @@ Plot.legend({
     ${resize((width) => chartHighlight(weightData, {width}))}
 </div>
 
-## Reading a network
+## Reading a Network
 
-This is maths + visual reorganisation to make it easier for us to see. Specifically, [d3 force-directed graph for disconnected graphs](https://observablehq.com/@asgersp/force-directed-graph-disjoint) (designed to "prevent detached subgraphs from escaping the viewport") As Ahnerts show, don't need network viz to analyse networks. So when we do, important to consider what we are actually doing: analysing a series of choices about modelling of historical reality (see [Education](https://beyond-notability.github.io/beyond-notability-observable-essays/education.html#modelling-education) post) through a series of mathemetical choices to organise that modelling as a network *and* a series of presentational choices re representing that modelling as a network. Got that. Good. Then we'll move on. So, what does it seem to be telling us:
+The first thing to note about most network visualisation is that it they representation of both mathematical relationships between data and a visual organisation of those relationships designed to improve readability and legibility. In this case, we use [d3 force-directed graph for disconnected graphs](https://observablehq.com/@asgersp/force-directed-graph-disjoint), which is designed to "prevent detached subgraphs from escaping the viewport". As scholars such as Ahnert and Ahnert demonstrate, we don't **need** network visualisations to analyse networks computationally. So when we do, it is vital to consider what we are actually doing: we are analysing a series of choices about the modelling of historical reality (see our [Education](https://beyond-notability.github.io/beyond-notability-observable-essays/education.html#modelling-education) data essay for more on modelling) through a series of mathematical choices deployed to organise that modelling as a network *and* a series of presentational choices about representing that modelling as a network. Got that. Good. What does this particular network visualisation seem to be telling us:
 
-- networks of women in arch/hist/heri dominated by those who were both in committees and went to events, with a sub-network centred on Gomme and Goodrich-Fyer
-- those only on committees then closely connected to that network.
-- those only recorded at events then form the periphery.
-- no bridges between discrete networks: there is a centre, a periphery, and then isolated networks.
-- toggle to 'events' and then 'committees' that becomes more obvious, though MVT emerges as a bridge between a big node link Kenyon and people like Wheeler, Graham, Liddle and Lamb --- intergenerational node (?)
+- First, networks of women in archaeology, history, and heritage circa 1870 - 1950 were dominated by those individuals who recorded frequently in [our wikibase](https://beyond-notability.wikibase.cloud/) as both members of committees and participating in events. They appear as a large network, with a second smaller sub-network that also centres on individuals who did both.
+- Second, those individuals in [our wikibase](https://beyond-notability.wikibase.cloud/) only recorded as working on committees are closely connected to that primary network.
+- Third, individuals in [our wikibase](https://beyond-notability.wikibase.cloud/) only recorded as having participated in form the periphery of the network, often in isolated small sub-networks.
+- Fourth, there are no obvious bridges between discrete networks: there is a centre, a periphery, and then isolated networks.
+- But, fifth, if you toggle to the 'events' view and then to the 'committees' view, bridges emerge. [Margerie Venables Taylor](https://beyond-notability.wikibase.cloud/wiki/Item:Q133) emerges as a bridge between a large network centred on [Kathleen Kenyon](https://beyond-notability.wikibase.cloud/wiki/Item:Q709) and a small sub-group containing [Tessa Verney Wheeler](https://beyond-notability.wikibase.cloud/wiki/Item:Q145), [Rose Graham](https://beyond-notability.wikibase.cloud/wiki/Item:Q57), [Dorothy Liddell](https://beyond-notability.wikibase.cloud/wiki/Item:Q256) and [Winifred Lamb](https://beyond-notability.wikibase.cloud/wiki/Item:Q238).
 
-Thing is, if you change the data on the graph then different stories emerge. For example, set min link weight to one and zoom out a little, you see a big ball, with large nodes on one side, smaller nodes on other, and a mass of one-time connection event nodes. Here the interactive nature of our viz enables interpretation of bridges. For example hover on 'Margaret Alice Murray', and look at the leftward connection to Charlotte Sophia Burne and rightward connection to Kathleen Mary Kenyon. Reaches to the heart of two separate networks. And if you hover on Charlotte Sophia Burne you see that Murray is her only connection into the "main" network. Burne then seems an important bridge.
+We have then, a story that starts to emerge. The thing is though, if you change the data presented by the network visualisation then different stories emerge. For example, if you stay on the 'events' view, set minimum link weight to one, and zoom out a little, you see a big ball, with large nodes on one side, smaller nodes on other, and a smattering of one-time connection event nodes around the core. Here the interactive nature of our viz enables interpretation of further bridges. For example hover on [Margaret Alice Murray](https://beyond-notability.wikibase.cloud/wiki/Item:Q569) (centre right) and look at the leftward connection to [Charlotte Sophia Burne](https://beyond-notability.wikibase.cloud/wiki/Item:Q662) and rightward connections to [Kathleen Kenyon](https://beyond-notability.wikibase.cloud/wiki/Item:Q709) and [Tessa Verney Wheeler](https://beyond-notability.wikibase.cloud/wiki/Item:Q145). Here, Murray is at the heart of two separate - if unevenly composed - networks. And if you hover on [Burne](https://beyond-notability.wikibase.cloud/wiki/Item:Q662) you see that [Murray](https://beyond-notability.wikibase.cloud/wiki/Item:Q569) is her Burne's connection into the large network. Burne then seems an important bridge. Burne was principally a folklorist. Murray whilst a member and sometime President of the [Folklore Society](https://beyond-notability.wikibase.cloud/wiki/Item:Q292) has broader interests, specialising in Egyptology. In [our wikibase](https://beyond-notability.wikibase.cloud/) Burne and Murray co-occur at the 1913 Annual Meeting of the [British Association for the Advancement of Science](https://beyond-notability.wikibase.cloud/wiki/Item:Q644) in Birmingham. Murray spoke on 'Evidence for the custom of killing the king in Ancient Egypt', Burne on 'Souling, Clementing and Caturning: Three November Customs of the Western Midlands'. Two scholars with ample evidence of possible connections - Burne also served as President of the [Folklore Society](https://beyond-notability.wikibase.cloud/wiki/Item:Q292) - linked by a single event, an event at which they spoke on very different subjects, and may never have interacted.
 
-(add something here on burne)
+## Networks of Association 
 
-## Association 
+What does the Burne-Murray case mean for interpreting this network?
 
-But what does this networking mean? What holds it together in reality?
-
-Switch to events network. Move to link weight 8. Jessie MacGregor https://beyond-notability.wikibase.cloud/wiki/Item:Q970 and Rosa Wallis https://beyond-notability.wikibase.cloud/wiki/Item:Q508 connected. Why? Royal Ac Summer Exhit. So this is an *association* network. This type of network is created by connecting nodes that belong to a "group", rather than from direct *interactions* (like senders and recipients of letters, which historians are used to). This involves some potentially risky assumptions; eg just because two people went to the same conference doesn't necessarily mean they knew each other (there is interesting stuff about this from research on [animal networks](https://dshizuka.github.io/networkanalysis/networktypes_socialnetworks.html#constructing-networks-from-associations)). Weak at best. Proxy for association.
-
+Switch to events network. Staying on the 'events' view, move to link weight 8. We now see two nodes: [Jessie MacGregor](https://beyond-notability.wikibase.cloud/wiki/Item:Q970) and [Rosa Wallis](https://beyond-notability.wikibase.cloud/wiki/Item:Q508) connected by a thick edge. This connection is connected by both appearing regularly at the [Royal Academy Summer Exhibition](https://beyond-notability.wikibase.cloud/wiki/Item:Q510): MacGregor on 28 occasions between 1872 and 1904, Wallis on 8 occasions between 1881 and 1918, with their co-occurrences in the 1880s. What [our wikibase](https://beyond-notability.wikibase.cloud/) does not tell us is if they exhibited in close proximity, if they met, and if so what they discussed. Here then, as with the Burne-Murray case, we arrive at the conclusion that this network is a network of *association*. It is a network created by connecting nodes that belong to "groups", rather than from direct *interactions* such as senders and recipients of letters, which historians will be more familiar with. This type of networking then involves some potentially risky assumptions: for example, just because two people went to the same event does not necessarily mean they knew each other. We aren't the first people to ponder this. Network science often grapples with the purpose and utility of such weak networking (such as this research on [animal networks](https://dshizuka.github.io/networkanalysis/networktypes_socialnetworks.html#constructing-networks-from-associations)). We can build interpretations from the knowledge that this network takes proxies for association to build a network. This involves knowing our data. And not being fouled by the fact the visualisation looks like other visualisations we may be familiar with. Which works against the use of visualisation as a simplifying explanatory tool. Proceed then, as they say, with caution.
 
 
 Credits 
