@@ -6,8 +6,6 @@ title: Networks
 
 # Women's Networks
 
-*this is a work-in-progress data essay*
-
 Creating linked data implies analysing networks, and analysing networks when digital humanities researchers are involved implies making network graphs. Despite this, the [Beyond Notability project](https://beyondnotability.org/) has made remarkably few attempts at analysing networks using network analysis technique, including network visualisation. The reason is that we had other proxies for networks in our data: co-habitation, co-education, co-location, co-working on publications or excacations, co-signing letters of nomination. But as we started putting together these data essays, one area that seemed particularly amenable to network visualisation were data relating to event participation and committee membership.
 
 ## Making Networkable Data
