@@ -1,7 +1,6 @@
 ---
 theme: dashboard
 title: (Almost) All the Dates
-toc: false
 ---
 
 
