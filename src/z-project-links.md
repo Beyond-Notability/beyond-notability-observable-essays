@@ -3,6 +3,8 @@ theme: dashboard
 title: Project Links
 ---
 
+# Project Links
+
 - [Beyond Notability Project Website](https://beyondnotability.org/)
 - [Beyond Notability Wikibase](https://beyond-notability.wikibase.cloud/wiki/Main_Page)
 - [Beyond Notability GitHub](https://github.com/Beyond-Notability/)
