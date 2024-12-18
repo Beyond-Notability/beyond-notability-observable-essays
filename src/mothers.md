@@ -1,7 +1,6 @@
 ---
 theme: dashboard
 title: Motherhood
-toc: false
 ---
 
 # A timeline of childbirth
