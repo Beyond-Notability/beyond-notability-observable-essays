@@ -19,7 +19,7 @@ But first a little aside on the nature of residence data. As we encountered resi
   </div>
 </div>
 
-## Residence and the Lifecycle
+## Residences and Lifecycles
 
 The good thing, though, is that we have assembled a lot of dateable residence data in [our wikibase](https://beyond-notability.wikibase.cloud/): around 1,300 occurances, roughly 1.4 residences per woman in our wikibase. And we also have a lot of other types of data that enable us to contextualise that dateable residence data. One such example is the type of date information captured by our '[date of birth](https://beyond-notability.wikibase.cloud/wiki/Property:P26)' statements. Of the 900 or so [women in our wikibase](https://beyond-notability.wikibase.cloud/w/index.php?title=Special:WhatLinksHere/Item:Q3&limit=500), around two-thirds have a '[date of birth](https://beyond-notability.wikibase.cloud/wiki/Property:P26)' statement. Given that roughly three-quarters of the women in our wikibase have residence data recorded, plotting the two together enables us to see relatively representative patterns in our data. One way of doing that plotting is shown below. Here the occurances of dateable residence data (the orange bars) by age of a person are plotted in comparison - and therefore making a pleasing dome iceberg shape - with all the dateable location data (e.g. a statement about attendance at a meeting that includes both the location of that meeting and a date of its occurence) in [our wikibase](https://beyond-notability.wikibase.cloud/) (in blue).
 
