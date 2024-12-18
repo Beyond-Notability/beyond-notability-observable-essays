@@ -45,7 +45,7 @@ toc: false
 </style>
 
 <div class="hero">
-  <h1>Beyond Notability Data Essays (2024)</h1>
+  <h1>Beyond Notability Data Essays</h1>
 
   
 </div>
