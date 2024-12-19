@@ -60,4 +60,4 @@ Each data essay digs into an facet of the data, moving between data, what that d
 
 Suggested citation:
 
-> Sharon Howard and James Baker, *Beyond Notability Data Essays* (https://beyond-notability.github.io/beyond-notability-observable-essays/, 2024)
+> Sharon Howard, James Baker, Amara Thornton, and Katherine Harloe, *Beyond Notability Data Essays* (https://beyond-notability.github.io/beyond-notability-observable-essays/, 2024)
