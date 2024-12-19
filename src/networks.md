@@ -6,13 +6,13 @@ title: Networks
 
 # Women's Networks
 
-Creating linked data implies analysing networks, and analysing networks when digital humanities researchers are involved implies making network graphs. Despite this, the [Beyond Notability project](https://beyondnotability.org/) has made remarkably few attempts at analysing networks using network analysis technique, including network visualisation. The reason is that we had other proxies for networks in our data: co-habitation, co-education, co-location, co-working on publications or excacations, co-signing letters of nomination. But as we started putting together these data essays, one area that seemed particularly amenable to network visualisation were data relating to event participation and committee membership.
+Creating linked data implies analysing networks, and analysing networks when digital humanities researchers are involved implies making network graphs. Despite this, the [Beyond Notability project](https://beyondnotability.org/) has made remarkably few attempts at analysing networks using network analysis technique, including network visualisation. The reason is that we had other proxies for networks in our data: co-habitation, co-education, co-location, co-working on publications or excavations, co-signing letters of nomination. But as we started putting together these data essays, one area that seemed particularly amenable to network visualisation were data relating to event participation and committee membership.
 
 ## Making Networkable Data
 
 These data, whilst related, had distinct origins. 'Event' data constitutes a series of statements relating to participation at events: this included people speaking, attending, organising, and exhibiting at events (see Sharon's [*PPA Events*](https://beyond-notability.github.io/bn_notes/posts/events-2024-02-26/) blog for more info). 'Committee' data is much more simple, represented only by those statements recording when people '[served on](https://beyond-notability.wikibase.cloud/wiki/Property:P102)' a committee or group.
 
-Making the data into networks of people required slightly different apporoaches to what consituted an connetion between two individuals.
+Making the data into networks of people required slightly different approaches to what constituted a connection between two individuals.
 
 For 'Event' data, this required a qualifier indicating that two or more people were at the same event at the same time, whether as the same type of participant - say, as both [speakers](https://beyond-notability.wikibase.cloud/wiki/Property:P23) or both [attendees](https://beyond-notability.wikibase.cloud/wiki/Property:P24) - or different types of participation - say, one person was an [organiser](https://beyond-notability.wikibase.cloud/wiki/Property:P109) whilst another was an [exhibitor](https://beyond-notability.wikibase.cloud/wiki/Property:P13). This type of connection takes no account of how participants interacted, but rather takes co-location as a proxy for association (more on which later).
 
@@ -27,7 +27,7 @@ Network visualisations (often referred to as network graphs) require a little ex
 - Each 'node' (a round blob) represents an individual people. They are coloured according to whether the data - drawn from [our wikibase](https://beyond-notability.wikibase.cloud/wiki/Main_Page) - contains statements about individuals participating in events (yellow), serving on committees (red), or both (both).
 - The size of each node reflects the number of connections between that node and another node (called "degree"). Note that in order to ensure legibility, node size is scaled: this reduces the relative size of very large nodes and increases the size of nodes with very few connection.
 - Each node is connected to one or more other nodes by 'edges', and the width of each edge (called "link weight") is determined by number of connections between a pair of nodes. In our visualisation, the default minimum link weight is two, meaning that nodes that connect to only one other node are filtered out (more on which later). All isolated notes - that is, representing instances where an individual participated in an event or served on a committee without that activity connecting to another individual - are removed.
-- Hovering over a node gives the number of 'appearances', a measure of the number of instances where an individual participated in an event or served on a committee. Note that this number may be smaller than the number of connections between that node and anothers node ("degree") depending on the size of an event/committee or the duration of service (e.g. a person could be in a single meeting that has multiple connections, therefore have an appearance of one with a high degree, therefore a large node).
+- Hovering over a node gives the number of 'appearances', a measure of the number of instances where an individual participated in an event or served on a committee. Note that this number may be smaller than the number of connections between that node and another node ("degree") depending on the size of an event/committee or the duration of service (e.g. a person could be in a single meeting that has multiple connections, therefore have an appearance of one with a high degree, therefore a large node).
 
 ```js
 //FILTERS CODE 
@@ -35,15 +35,15 @@ Network visualisations (often referred to as network graphs) require a little ex
 ```js
 //select network: start with both selected 
 const pickGroup = view(
-		Inputs.radio(
-				["both"].concat(data.nodes.flatMap((d) => d.groups)),
-				{
-				label: "select network", 
-				value: "both", // default is both.
-				sort: true, 
-				unique: true
-				}
-		)
+    Inputs.radio(
+        ["both"].concat(data.nodes.flatMap((d) => d.groups)),
+        {
+        label: "select network", 
+        value: "both", // default is both.
+        sort: true, 
+        unique: true
+        }
+    )
 )
 ```
 ```js 
@@ -55,13 +55,13 @@ const minWeight = d3.min(groupData.links.map(d => d.weight));
 const maxWeight = d3.max(groupData.links.map(d => d.weight))
 
 const weightConnections = view(
-	Inputs.range(
-		[minWeight, maxWeight], {
-  		label: "minimum link weight",
-  		step: 1,
-  		value: 2 // default to min 2
-		}
-	)
+  Inputs.range(
+    [minWeight, maxWeight], {
+      label: "minimum link weight",
+      step: 1,
+      value: 2 // default to min 2
+    }
+  )
 )
 ```
 ```js
@@ -134,7 +134,7 @@ done
 - transitions are a bit better
 - improve colours and add a legend
 - fixed some filtering errors (may not actually affect appearance of chart)
-	- really fixed them this time!
+  - really fixed them this time!
 - link weight = width of lines, varies with network viewed
 - link weight filter (and other things) varies with network being viewed
 
@@ -223,18 +223,18 @@ const height = 700
 
   const simulation = d3.forceSimulation()
     .force("link", d3.forceLink().id( function(d) { return d.id; } ).strength(0.3)) 
-		.force("charge", d3.forceManyBody().strength(-150) ) //
-		.force("center", d3.forceCenter( 0,0 ))
-		
-		// avoid (or at least reduce) overlap.
-		.force("collide", d3.forceCollide().radius(d => getRadius(d) + 30).iterations(2))  
+    .force("charge", d3.forceManyBody().strength(-150) ) //
+    .force("center", d3.forceCenter( 0,0 ))
+    
+    // avoid (or at least reduce) overlap.
+    .force("collide", d3.forceCollide().radius(d => getRadius(d) + 30).iterations(2))  
      
       .force("x", d3.forceX(0.7))
       .force("y", d3.forceY(0.7))
       ;
       
 
-// lines between nodes		
+// lines between nodes    
 
   const link = baseGroup.append("g")
       .selectAll("line")
@@ -263,7 +263,7 @@ const height = 700
 // text labels 
   // stuff has to be added in several places after this to match node and link.
  
- 	const text = baseGroup.append("g")
+  const text = baseGroup.append("g")
     //.attr("class", "labels")
     .selectAll("text")
     .data(nodes)
@@ -361,7 +361,7 @@ const height = 700
         console.log(o.value)
       });
 
-	 	text
+    text
       .transition(500)
       .style('opacity', 1);
 
@@ -471,10 +471,10 @@ const tooltip = d3.select("body").append("div")
 ```js
 // 
 function getRadius(useCasesCount){
-		var	m=useCasesCount/3
-		var d=3/useCasesCount
+    var m=useCasesCount/3
+    var d=3/useCasesCount
   if(useCasesCount>=6){   
-  	var radius = m+d  
+    var radius = m+d  
     return radius
   }
   return 6
@@ -566,10 +566,10 @@ const json = FileAttachment("./data/l_networks_two/bn-two-networks.json").json()
 const dataNodes =
 json.nodes
   .map((d) => (
-  	{...d, 
-  		both_degree: d.all[0].degree ,
-  		events_degree: (d.events[0] != undefined) ? d.events[0].degree : [] ,
-  		committees_degree: (d.committees[0] != undefined ) ? d.committees[0].degree : []	 
+    {...d, 
+      both_degree: d.all[0].degree ,
+      events_degree: (d.events[0] != undefined) ? d.events[0].degree : [] ,
+      committees_degree: (d.committees[0] != undefined ) ? d.committees[0].degree : []   
   })) 
 
 // don't need to do anything to json.links at this stage
@@ -586,15 +586,15 @@ const data = {nodes: dataNodes, links: json.links}
 const groupNodes =
 data.nodes
   .filter((d) =>  
-  		pickGroup === "both" ||  	
-  		d.groups.some((m) => pickGroup.includes(m)) 
-  		)
-  		// select the right degree for the network.
+      pickGroup === "both" ||   
+      d.groups.some((m) => pickGroup.includes(m)) 
+      )
+      // select the right degree for the network.
   .map((d) => ({...d,
-  		degree: // can rename this once you get rid of toplevel stuff
-			(pickGroup==="committees") ? d.committees_degree :  
-			(pickGroup=="events") ? d.events_degree :  
-		  d.both_degree  
+      degree: // can rename this once you get rid of toplevel stuff
+      (pickGroup==="committees") ? d.committees_degree :  
+      (pickGroup=="events") ? d.events_degree :  
+      d.both_degree  
   })) 
 
 const groupLinks = data.links.filter(
@@ -610,10 +610,10 @@ const groupLinks = data.links.filter(
   )
   // select the right weight for the filter.
   .map((d) => ({...d,
-  		weight: 
-			(pickGroup==="committees") ? d.weight_committees :  
-			(pickGroup=="events") ? d.weight_events :  
-		  d.weight_both
+      weight: 
+      (pickGroup==="committees") ? d.weight_committees :  
+      (pickGroup=="events") ? d.weight_events :  
+      d.weight_both
   }))  ;
 
 const groupData = {nodes:groupNodes, links: groupLinks}
