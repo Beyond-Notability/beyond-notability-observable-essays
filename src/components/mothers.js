@@ -16,8 +16,8 @@ export function hadChildrenAgesChart(hadChildrenAges, lastAges, workServedSpoke,
     x: {
     	grid: true, 
     	//tickFormat: d3.format('d'),
-    	label: "age at birth of child", // only shows at bottom, why?
-    	axis: "both" // "both" top and bottom. [null for nothing.]
+    	label: "age at birth of child", // 
+    	axis: "bottom" // won't show both, idk why.
     	},
     	
     y: {label: null}, // this affects tooltip label too
@@ -30,20 +30,19 @@ export function hadChildrenAgesChart(hadChildrenAges, lastAges, workServedSpoke,
 		    
     marks: [
 
-			// this works in the education timeline but not here. no error message, just blank.
-//    	Plot.axisX({anchor: "top", 
-//      						label: "age at birth of child", 
-//      						tickFormat: d3.format('d')}
-//      						),
-//      Plot.axisX({anchor: "bottom", 
-//      						label: "age at birth of child", 
-//      						tickFormat: d3.format('d')}
-//      						),
-      
+			// add axis label to top as well. 
+    	
+    	Plot.axisX({anchor: "top", 
+      						label: "age at birth of child", 
+      						dy: 6, // a bit of padding between label and nubmers.
+      						tickFormat: d3.format('d')}
+      						),
+
+            
       // horizontal guideline
       // age 15 to last event. 
       Plot.ruleY(lastAges, {
-      	x1:15, x2: "last_age", // ?need to incorporate work ages into last_age...
+      	x1:15, x2: "last_age", 
       	y: "personLabel", 
       	stroke: "lightgray" , 
       	strokeWidth: 1,
@@ -51,13 +50,13 @@ export function hadChildrenAgesChart(hadChildrenAges, lastAges, workServedSpoke,
       	yob: 'bn_dob_yr', 
       	year:"year"
       	}, 
-      	sort: {y: 'yob'} // sort only needed once?
+      	sort: {y: 'yob'} // sort only needed once apparently
       }),
      	
       
       // horizontal thicker line first child to last child. 
         Plot.ruleY(hadChildrenAges, {
-      	x1:"start_age", x2: "last_age", // x1 to start this at 15 as well. need to incorporate work ages into last_age...
+      	x1:"start_age", x2: "last_age", 
       	y: "personLabel", 
       	stroke: "lightgray" , 
       	strokeWidth: 4,
@@ -65,7 +64,7 @@ export function hadChildrenAgesChart(hadChildrenAges, lastAges, workServedSpoke,
       	yob: 'bn_dob_yr', 
       	year:"year"
       	}, 
-      	//sort: {y: 'yob'} // sort only needed once?
+      	//sort: {y: 'yob'} 
       }),
       
       // vertical ruled line
@@ -120,14 +119,14 @@ export function hadChildrenAgesChart(hadChildrenAges, lastAges, workServedSpoke,
       			"year of birth":"bn_dob_yr", 
       			//woman: "personLabel"
       		} , 
-      	//sort: {y: 'yob'} , // sorting again doesn't seem to be needed
+      	//sort: {y: 'yob'} , 
       	// tooltips
   			tip: {
     			format: {
     				//woman: true, // added channel for label.
       			y: false, // now need to exclude this explicitly
     				"year of birth": (d) => `${d}`,
-      			"child born": (d) => `${d}`, // TODO proper date formatting?
+      			"child born": (d) => `${d}`, // probably ought to have done proper date formatting...
       			x: true,
       			child:true
     			},
@@ -140,6 +139,6 @@ export function hadChildrenAgesChart(hadChildrenAges, lastAges, workServedSpoke,
   }); // /plot
 } // /function
 
-// channels to reference more data variables; can be called anything
-// i think you only need to do the sort once
+
+
 // seems clunky to make y label empty then define same variable as a channel for tooltip then exclude y again! maybe there's a better way to keep y label for tooltip but omit from y axis...

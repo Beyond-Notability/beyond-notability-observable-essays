@@ -39,12 +39,8 @@ import "./_observablehq/client.js";
 <div>Contents</div>
 <ol>
 <li class="observablehq-secondary-link"><a href="#summary-of-pages">Summary of pages</a></li>
-<li class="observablehq-secondary-link"><a href="#general">General</a></li>
-<li class="observablehq-secondary-link"><a href="#all-the-dates">All the dates</a></li>
-<li class="observablehq-secondary-link"><a href="#childbirth">Childbirth</a></li>
-<li class="observablehq-secondary-link"><a href="#education">Education</a></li>
-<li class="observablehq-secondary-link"><a href="#residence">Residence</a></li>
-<li class="observablehq-secondary-link"><a href="#networks">Networks</a></li>
+<li class="observablehq-secondary-link"><a href="#todo">Todo</a></li>
+<li class="observablehq-secondary-link"><a href="#childbirth-notes">Childbirth notes</a></li>
 </ol>
 </nav>
 </aside>
@@ -58,23 +54,20 @@ import "./_observablehq/client.js";
 <li>Something about residence and gaps in it</li>
 <li>Networks [events and committee service]</li>
 </ol>
-<h2 id="general" tabindex="-1"><a class="observablehq-header-anchor" href="#general">General</a></h2>
-<p>Find out how to toggle between dark and light mode so I can test how things look!</p>
-<p>nicer styling esp on front page!</p>
-<p>general credits</p>
-<h2 id="all-the-dates" tabindex="-1"><a class="observablehq-header-anchor" href="#all-the-dates">All the dates</a></h2>
+<h2 id="todo" tabindex="-1"><a class="observablehq-header-anchor" href="#todo">Todo</a></h2>
+<p>general tech credits? Observable, D3, R, Tidyverse.</p>
+<p>minor niggle on several charts: how to put filters/legend in the same div as the chart (or at least make them look as though they are)</p>
+<p>Networks</p>
 <ul>
-<li>category filters (maybe)</li>
+<li>more info in tooltips</li>
+<li>toggle node size between degree and betweenness centrality (maybe) (will need to use rankings rather than measures, might not work)</li>
 </ul>
-<h2 id="childbirth" tabindex="-1"><a class="observablehq-header-anchor" href="#childbirth">Childbirth</a></h2>
-<ul>
-<li>Plot.axis to show label at both top and bottom is not working (cf education) and Idk why (should) (lowish priority: not essential but desirable given that it's a tall chart, and for consistency between similar charts)</li>
-</ul>
-<p>notes</p>
+<h2 id="childbirth-notes" tabindex="-1"><a class="observablehq-header-anchor" href="#childbirth-notes">Childbirth notes</a></h2>
+<p>some of these conflict slightly with text so don't delete yet...</p>
 <ul>
 <li>work includes <code>employed as</code> (only about 3 instances?) - maybe separate these out</li>
 <li>named children included (if they have a date of birth) as well as <code>had child in</code></li>
-<li>upper age cutoff at 70; v few data points beyond this, doesn't significantly change interpretation but does make chart less readable (because it's trying to squish more into the same space)</li>
+<li>upper age cutoff at 75; v few data points beyond this, doesn't significantly change interpretation but does make chart less readable (because it's trying to squish more into the same space)</li>
 <li>handling more than one activity in the same year:
 <ul>
 <li>there's been some reduction in preprocessing, so that only one activity per type per year is included in chart (doesn't remove that many instances)</li>
@@ -82,21 +75,9 @@ import "./_observablehq/client.js";
 </ul>
 </li>
 </ul>
-<h2 id="education" tabindex="-1"><a class="observablehq-header-anchor" href="#education">Education</a></h2>
-<ul>
-<li>custom d3 shapes? (esp for start/end pairs) [maybe]</li>
-</ul>
-<h2 id="residence" tabindex="-1"><a class="observablehq-header-anchor" href="#residence">Residence</a></h2>
-<ul>
-<li>examples of people with gaps: look at place data between those gaps, does it help explain absent residence data? [maybe]</li>
-</ul>
-<h2 id="networks" tabindex="-1"><a class="observablehq-header-anchor" href="#networks">Networks</a></h2>
-<ul>
-<li>a few outstanding TODOs on the page</li>
-</ul>
 </main>
 <footer id="observablehq-footer">
 <nav><a rel="prev" href="./residence.html"><span>Residence</span></a><a rel="next" href="./z-project-links.html"><span>Project Links</span></a></nav>
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-12-21T14:51:23">Dec 21, 2024</a>.</div>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-12-21T16:04:41">Dec 21, 2024</a>.</div>
 </footer>
 </div>

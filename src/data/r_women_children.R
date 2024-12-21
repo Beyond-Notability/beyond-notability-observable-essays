@@ -95,7 +95,7 @@ bn_had_children_query |>
 
 
 ## set an upper age cutoff for work and served. v few beyond 70 and it squishes things.
-last_cutoff <- 70
+last_cutoff <- 75
 
 ##query without date property labels
 

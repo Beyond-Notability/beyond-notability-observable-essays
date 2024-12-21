@@ -119,26 +119,6 @@ To answer this, stay on the 'events' view and move to link weight eight. We now 
 - [Plot: Legends](https://observablehq.com/d/a23f6e59f1380df0)
 
 
-## To do!
-
-- more info in tooltips
-- toggle node size between degree and betweenness centrality (maybe) (will need to use rankings rather than measures, might not work)
-- adjust initial zoom setting (still a mystery)
-- slightly slower/smoother transitions (ditto)
-- minor niggle: how to put the filters/legend in the same div as the chart (or make them look as though they are)
-
-done
-- add all the credits
-- as a sort of workaround for the zoom, changed default min link weight to 2, which gives better initial view 
-- adjust collision - I *think* this is working better
-- transitions are a bit better
-- improve colours and add a legend
-- fixed some filtering errors (may not actually affect appearance of chart)
-  - really fixed them this time!
-- link weight = width of lines, varies with network viewed
-- link weight filter (and other things) varies with network being viewed
-
-
 
 
 
@@ -452,6 +432,39 @@ const height = 700
 
 
 
+```js
+
+function drag(simulation) {
+
+  function dragstarted(event) {
+    if (!event.active) simulation.alphaTarget(0.3).restart();
+    event.subject.fx = event.subject.x;
+    event.subject.fy = event.subject.y;
+  }
+
+  function dragged(event) {
+    event.subject.fx = event.x;
+    event.subject.fy = event.y;
+  }
+
+  function dragended(event) {
+    if (!event.active) simulation.alphaTarget(0);
+    event.subject.fx = null;
+    event.subject.fy = null;
+  }
+
+
+  return d3.drag()
+      .on("start", dragstarted)
+      .on("drag", dragged)
+      .on("end", dragended);
+  
+}
+
+```
+
+
+
 
 
 
@@ -533,13 +546,6 @@ html
 
 
 
-
-
-
-```js
-// Import components. importing chart is complicated!
-import {drag} from "./components/networks.js";
-```
 
 
 

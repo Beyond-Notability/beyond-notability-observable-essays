@@ -20,15 +20,6 @@ title: "Resided at dates",
 });
 }
 
-// adding more things
-//export function datesChartY(data, {width}, plotTitle, plotHeight) {
-
-//  return Plot.plot({
-  
-//    title: plotTitle, 
-    
-//    width,
-//    height: plotHeight, // 2000,
 
 
 export function residedFacetedStackedDot(data, {width}) {

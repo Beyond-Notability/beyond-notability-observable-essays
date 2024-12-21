@@ -12,4 +12,3 @@ write_csv(bn_had_children_ages, "had-children-ages.csv", na="")
 write_csv(bn_last_ages_all, "last-ages-all.csv", na="")
 write_csv(bn_work_served_spoke_years_children, "work-served-spoke-years-with-children.csv", na="")
 system("zip - -r .")  
-

@@ -12,7 +12,7 @@ Alongside collecting information about women's work in archaeology, history, and
 The graph on this page shows all the women in [our wikibase](https://beyond-notability.wikibase.cloud/) for whom we have ['had child in'](https://beyond-notability.wikibase.cloud/wiki/Special:WhatLinksHere/Property:P131) data with a known date on which that event occurred. Each woman is represented by a single row. The rows are sorted by date of birth, with the earliest - [Margaret Emily Blaauw](https://beyond-notability.wikibase.cloud/wiki/Item:Q3658), born 1798 - at the top and the latest - [Jacquetta Hawkes](https://beyond-notability.wikibase.cloud/wiki/Item:Q106), born 1910 - at the bottom. The right hand end of the row represents the last piece of data on the graph (rather than a date of death). Each row then shows four types of information:
 
 - The year or years in which each woman had children, with each of these instances represented as a vertical line.
-- For women who had more than on child, the periods between having their first and last child are represented by a thicker horizontal line.
+- For women who had more than one child, the periods between having their first and last child are represented by a thicker horizontal line.
 - As a diamond, the years (usually not start and end dates) in which we have documentary evidence that each woman ['served on'](https://beyond-notability.wikibase.cloud/wiki/Property:P102) a committee or group, for example that [Sophie Lomas served on the Historical Committee of the Festival of Empire in 1911](https://beyond-notability.wikibase.cloud/wiki/Item:Q960), though that service may have started before that date or ended after that date.
 - As a circle, the years (again, usually not start and end dates) in which we are aware that each woman ['held a position'](https://beyond-notability.wikibase.cloud/wiki/Property:P17) in or for an organisation, such as a recorded reference to [Lina Chaworth Musters having held the position of County Collector for The Folklore Society in 1894](https://beyond-notability.wikibase.cloud/wiki/Item:Q998), though - again - that position may have started before that date or ended after that date. Note that this category of data does not include employment at an institution that typically employed people on a formal, longstanding basis (this captured by our ['employed as'](https://beyond-notability.wikibase.cloud/wiki/Property:P105) statements).
 - Ignore the cross or 'X' marks for now, in fact toggle them off by unchecking the 'spoke' box at the top of the visualisation.
@@ -60,7 +60,7 @@ This might seem a bit of a downer to end on. But - we think - there is considera
 
 const plotTitle = "The ages at which BN women had children, sorted by mothers' dates of birth";
 
-const plotHeight = 1500;
+const plotHeight = 1800;
 ```
 
 ```js

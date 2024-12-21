@@ -3,8 +3,6 @@ import * as d3 from "npm:d3";
 
 	
 // share as much as possible between the two versions of the chart
-// several very small differences in text between year and age; not quite worked out how to handle those yet
-// but it is easy to make Age/Year consts that you can put up top; at least it's easier than looking for the right spot inside each chart.
 
 const colorTime = Plot.scale({
 		color: {
@@ -13,7 +11,7 @@ const colorTime = Plot.scale({
 		}
 	});
 
-// TODO not working as intended; legend disappears.
+// not working as intended; legend disappears. idk why.
 const symbolTime = Plot.scale({ 	
     symbol: {legend:true, 
     				range: ["triangle", "diamond2", "diamond2", "star", "square"], 
@@ -21,23 +19,9 @@ const symbolTime = Plot.scale({
 		}
 	});
 	
-//const plotHeight = 6000;
 const plotMarginTop = 20;
 const plotMarginLeft = 180;
 
-    	//TODO a bit more space between top X axis labels and first rule?
-    	// this is an extraordinary faff. 
-    	// problem that increasing topMargin pushes down tick labels but not the axis label!!! so they overlap.
-    	// increasing space between tick labels and axis labels needs messing around with Plot.axisX() and dy, and then the tick marks are wrong. how to fix those? idk yet.
-    	
-    	//TODO year of event label at both top and bottom?
-    	// can't seem to get it working for this chart even though it's working for mothers.
-    	
-    	//TODO custom shapes?
-    	// I think this needs d3.js stuff.
-    
-
-//const plotTitle = "Higher education [TODO (dates|ages)] "
 
 const eventLabel = {label: "year of event"}
     	   	
@@ -57,15 +41,13 @@ export function educatedYearsChart(data, {width}, titleYear, plotHeight) {
     	
     x: {
     	grid: true, 
-
-    	//label: "year of event", 
     	//tickFormat: d3.format('d'), // overruled by plot.axis
-    	//axis: "both" // "both" top and bottom of graph. null for nothing. when this = "both" the label only shows at the bottom, but when set to "top" the label is at the top...  seems you have to do Plot.axis to get it the way you want.
+    	//axis: "both" // "both" doesn't work; the label only shows at the bottom...  seems you have to do Plot.axis to get it the way you want.
     	}, 
     	
     y: {label: null}, // this affects tooltip label too  
     
-    //symbol: symbolTime, // not showing legend...    
+    //symbol: symbolTime, // doesn't show legend...    
     symbol: {legend:true, 
     				range: ["triangle", "diamond2", "diamond2", "star", "square"], 
 						domain: ["point in time", "start time", "end time", "latest date", "filled"]
@@ -88,19 +70,16 @@ export function educatedYearsChart(data, {width}, titleYear, plotHeight) {
       
       
     	// GUIDE LINES
-      
-    	// turn into separate rule for education? needs separate year_last as well
-    	
-    	// TODO split rule so that first segment between 1830 and birth is de-emphasised but still acts as a guide. just thinner atm but will look at other possible styling.
     	
       Plot.ruleY(data, { 
-      	x1:1830, // TODO variable not hard coding? in case anything earlier gets added to the database... or just filter the data.
+      	x1:1830, // variable would have been better than hard coding, too late now.
       	x2:"bn_dob_yr", 
       	y: "person_label", 
       	//dy:-6, // if separate
       	stroke: "lightgray" , 
       	strokeWidth: 1,
-      channels: {yob: 'bn_dob_yr', "year":"year"}, sort: {y: 'yob'} // only need to do this once
+      channels: {yob: 'bn_dob_yr', "year":"year"}, 
+      sort: {y: 'yob'} // only need to do this once, apparently
       }),
       
       Plot.ruleY(data, {
@@ -117,39 +96,40 @@ export function educatedYearsChart(data, {width}, titleYear, plotHeight) {
     //  VERTICAL RULES
     
     	// this should be *after* left-most Y rule so it sits on top.
-      Plot.ruleX([1830]), // makes X start at 1830. TODO earliest_year rather than hard coded? but needs to be 0 (or 5). leave it for the moment.
+      Plot.ruleX([1830]), // makes X start at 1830. 
       
     // notable degree dates highlighted
-    // TODO tip/label of some sort.
-      Plot.ruleX([1878], {dy:-5, stroke:"#e97451", strokeOpacity: 0.4, strokeWidth:2}), // UoL degrees. 
+      Plot.ruleX([1878], {dy:-5, stroke:"#e97451", strokeOpacity: 0.4, strokeWidth:2}), // UoL degrees 1878. 
       Plot.tip([`London`],
       {
-      	x: 1878, frameAnchor:"top", 
+      	x: 1878, 
+      	frameAnchor:"top", 
         dy: -3, dx:-3, 
-      	anchor: "right", //pointerSize:4, 
+      	anchor: "right",  
       	textPadding:2, 
       	fill: null, 
-      	//stroke: null
       	}
     ),
       
-      Plot.ruleX([1920], {dy:-5, stroke: "#004488", strokeOpacity: 0.2, strokeWidth:2}), // oxford
+      Plot.ruleX([1920], {dy:-5, stroke: "#004488", strokeOpacity: 0.2, strokeWidth:2}), // oxford 1920
       Plot.tip([`Oxford`],
       {
-      	x: 1920, frameAnchor:"top", 
+      	x: 1920, 
+      	frameAnchor:"top", 
         dy: -3, dx:3, 
-      	anchor: "left", //pointerSize:4, 
+      	anchor: "left", 
       	textPadding:2, 
       	fill: null, 
       	//stroke: null
       	}
     ),    
-      Plot.ruleX([1948], {stroke: "#AA3377", strokeOpacity: 0.2, strokeWidth:2}), // cambridge
+      Plot.ruleX([1948], {stroke: "#AA3377", strokeOpacity: 0.2, strokeWidth:2}), // cambridge 1948
       Plot.tip([`Cambridge`],
       {
-      	x: 1948, frameAnchor:"top", 
+      	x: 1948, 
+      	frameAnchor:"top", 
         dy: -3, dx:3, 
-      	anchor: "left", //pointerSize:4, 
+      	anchor: "left", 
       	textPadding:2, 
       	fill: null, 
       	//stroke: null
@@ -158,7 +138,7 @@ export function educatedYearsChart(data, {width}, titleYear, plotHeight) {
       
       // DOTS
       
- 			// educated at fill years for start/end pairs. draw BEFORE single points.
+ 			// educated at fill years for start/end. draw BEFORE single points.
  			
       Plot.dot(
       	data, {
@@ -193,7 +173,7 @@ export function educatedYearsChart(data, {width}, titleYear, plotHeight) {
       	fill: "year_type",
       	symbol: "year_type",
       	filter: (d) =>	d.src!="educated" , 
-      	dy:6, // vertical offset. negative=above line.
+      	dy:6, // vertical offset. positive=below line.
 
       // tooltip stuff moved
 
@@ -226,7 +206,7 @@ export function educatedYearsChart(data, {width}, titleYear, plotHeight) {
       // tip degrees
     	Plot.tip(data, Plot.pointer({
     			x: "year", 
-    			y: "person_label", // can you really not give this a label?
+    			y: "person_label", 
       	  filter: (d) =>  d.year_type !="filled"  &	d.src=="degrees", 
     			anchor:"top-left",
     			dx:6,
@@ -253,13 +233,12 @@ export function educatedYearsChart(data, {width}, titleYear, plotHeight) {
       // tip education negative offset
     	Plot.tip(data, Plot.pointer({
     			x: "year", 
-    			y: "person_label", // can you really not give this a label?
+    			y: "person_label", 
       	  filter: (d) =>  d.year_type !="filled"  &	d.src=="educated",  // no tips on filled years!
     			anchor:"top-right",
     			dx:-6,
     			dy:-6,
     			channels: {
-      		//woman: "person_label",
     			"event type":"src",
     			"event year": "year",
       		"year of birth":"bn_dob_yr", 
@@ -300,7 +279,7 @@ export function educatedAgesChart(data, {width}, titleAge, plotHeight) {
     	grid: true, 
     	//padding:20, // does nothing
     	//label: "age at event", // using Plot.axis instead 
-    	//axis: "both" // "both" top and bottom of graph. null for nothing.
+    	//axis: "both" //
     	}, 
     y: {label: null}, // this affects tooltip label too  
     //symbol: symbolTime,
@@ -379,7 +358,7 @@ export function educatedAgesChart(data, {width}, titleAge, plotHeight) {
       // tip degrees
     	Plot.tip(data, Plot.pointer({
     			x: "age", 
-    			y: "person_label", // can you really not give this a label?
+    			y: "person_label", 
       	  filter: (d) =>  d.year_type !="filled"  &	d.src=="degrees", 
     			anchor:"top-left",
     			dx:6,
@@ -409,7 +388,7 @@ export function educatedAgesChart(data, {width}, titleAge, plotHeight) {
       // tip education negative offset
     	Plot.tip(data, Plot.pointer({
     			x: "age", 
-    			y: "person_label", // can you really not give this a label?
+    			y: "person_label", 
       	  filter: (d) =>  d.year_type !="filled"  &	d.src=="educated", // no tips on filled years!
     			anchor:"top-right",
     			dx:-6,
@@ -441,8 +420,5 @@ export function educatedAgesChart(data, {width}, titleAge, plotHeight) {
 }
 
 
-
-// channels to reference more data variables; can be called anything
-// seems clunky to make y label empty then define same variable as a channel for tooltip then exclude y again! 
 
 
