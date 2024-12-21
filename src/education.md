@@ -25,11 +25,12 @@ To plot this data, we took a similar approach as we did for [motherhood](https:/
 - A toggle to switch between a default view that presents the data using dates on the X-axis and a second view that presents the data using ages on the X-axis.
 
 
+
+
 ```js
 // toggle baby! 8-)
 const makeToggleView = view(makeToggle);
 ```
-
 <div class="grid grid-cols-1">
   <div class="card">
     ${makeChart(makeToggleView) }
@@ -55,9 +56,9 @@ If we take education as a form of 'work', as endeavours that pre-figured some ki
 
 ## References
 
-- [Observable Plot](https://observablehq.com/plot/getting-started)
-- [Observable Plot cheatsheets: colours](https://observablehq.com/@observablehq/plot-cheatsheets-colors)
-- [Radio input](https://observablehq.com/framework/inputs/radio)
+- [Observable Plot: dot plots](https://observablehq.com/plot/marks/dot)
+- [Observable Plot: colours](https://observablehq.com/@observablehq/plot-cheatsheets-colors)
+- [Radio inputs](https://observablehq.com/framework/inputs/radio)
 
 
 ```js
@@ -85,6 +86,7 @@ import {educatedAgesChart, educatedYearsChart} from "./components/education.js";
 
 const education = FileAttachment("data/l_dates_education/educated_degrees2.json").json({typed: true});
 ```
+
 
 
 

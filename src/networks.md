@@ -65,9 +65,11 @@ const weightConnections = view(
 )
 ```
 ```js
-//legend (standalone)
+//legend (standalone using Plot.legend)
 //https://observablehq.com/d/a23f6e59f1380df0
 
+//make it a const and then you can put it inside the chart area.
+const networkLegend =
 Plot.legend({
   color: {
     domain: colourDomain, 
@@ -76,10 +78,8 @@ Plot.legend({
   },
  // legend: "swatches",
   //className: "alphabet",
-  swatchSize: 15,
-
+  swatchSize: 10
 })
-
 ```
 ```js
 // END OF FILTERS CODE.
@@ -87,6 +87,7 @@ Plot.legend({
 
 
 <div class="card">
+		${networkLegend}
     ${resize((width) => chartHighlight(weightData, {width}))}
 </div>
 
@@ -110,7 +111,7 @@ To answer this, stay on the 'events' view and move to link weight eight. We now 
 
 ## References
 
-- [Force-Directed Graph, Disjoint](https://observablehq.com/@asgersp/force-directed-graph-disjoint)
+- [D3 Force-Directed Graph, Disjoint](https://observablehq.com/@asgersp/force-directed-graph-disjoint)
 - [Network Graph with d3.force grouping (for highlighting)](https://observablehq.com/@ravengao/force-directed-graph-with-cola-grouping )
 - [D3 Force-Directed Graph with Input](https://observablehq.com/@asgersp/d3-force-directed-graph-with-input)
 - [Drag Queens Netwerk Diagram](https://observablehq.com/d/f3941ff4743f26e3)
@@ -482,7 +483,7 @@ const tooltip = d3.select("body").append("div")
 
 
 ```js
-// 
+
 function getRadius(useCasesCount){
     var m=useCasesCount/3
     var d=3/useCasesCount
@@ -494,7 +495,6 @@ function getRadius(useCasesCount){
 }
 
 
-//changed
 const colour = d3.scaleOrdinal(colourDomain, colourRange);
 
 ```
@@ -567,7 +567,7 @@ const json = FileAttachment("./data/l_networks_two/bn-two-networks.json").json()
 
 ```js
 // prepare data for first filter
-// it feels like there ought to be a better way to add *_degree and suchlike to be usable, but this is the one I can work out how to do so.
+// it feels like there ought to be a better way to add *_degree and suchlike to be usable, but this is the one I can work out how to do, so.
 
 const dataNodes =
 json.nodes

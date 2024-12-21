@@ -18,6 +18,7 @@ The graph on this page shows all the women in [our wikibase](https://beyond-nota
 - Ignore the cross or 'X' marks for now, in fact toggle them off by unchecking the 'spoke' box at the top of the visualisation.
 
 
+
 ```js
 //toggle
 const checkMothers = view(makeCheckbox) ;
@@ -53,7 +54,7 @@ This might seem a bit of a downer to end on. But - we think - there is considera
 
 ## References
 
-- [Observable Plot tick mark](https://observablehq.com/plot/marks/tick)
+- [Observable Plot: tick mark](https://observablehq.com/plot/marks/tick)
 
 ```js
 // editables

@@ -69,8 +69,8 @@ In [our wikibase](https://beyond-notability.wikibase.cloud/) then, the women who
 
 ## References
 
-- [Observable Plot dot mark](https://observablehq.com/plot/marks/dot)
-- [Observable Plot stack transform](https://observablehq.com/plot/transforms/stack)
+- [Observable Plot: dot plots](https://observablehq.com/plot/marks/dot)
+- [Observable Plot: stack transform](https://observablehq.com/plot/transforms/stack)
 
 
 

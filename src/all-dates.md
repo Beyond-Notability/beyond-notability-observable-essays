@@ -40,8 +40,8 @@ Indeed, places of residence - as we [expand on in a dedicated essay](https://bey
 
 ## References
 
-- [Observable Plot dodge transform](https://observablehq.com/plot/transforms/dodge)
-- [Observable Plot cheatsheets: colours](https://observablehq.com/@observablehq/plot-cheatsheets-colors)
+- [Observable Plot: dodge transform](https://observablehq.com/plot/transforms/dodge)
+- [Observable Plot: colours](https://observablehq.com/@observablehq/plot-cheatsheets-colors)
 - [Don't use ordinal scales for dates](https://observablehq.com/@tophtucker/dont-use-ordinal-scales-for-dates)
 
 

@@ -5,23 +5,22 @@ toc: true
 ---
 
 
-Summary of pages
-------
-
-1. All the dates data
-2. Childbirth and other activities before and after
-3. Higher education and degrees timeline 
-4. Something about residence and gaps in it 
-5. Networks [events and committee service] 
-
 
 Todo
 ----
 
-general tech credits? Observable, D3, R, Tidyverse.
+general tech credits
 
+Observable and D3 (site generator and visualisations)
 
-minor niggle on several charts: how to put filters/legend in the same div as the chart (or at least make them look as though they are)
+- [Observable Framework](https://observablehq.com/framework/what-is-framework)
+- [Observable Plot](https://observablehq.com/plot/getting-started)
+- [D3.js](https://d3js.org/getting-started)
+
+R (data wrangling)
+
+- [R](https://cran.r-project.org/)
+- [Tidyverse](https://www.tidyverse.org/)
 
 
 Networks
@@ -34,7 +33,7 @@ Networks
 Childbirth notes
 ----------
 
-some of these conflict slightly with text so don't delete yet...
+some of these conflict slightly with text so don't remove yet...
 
 - work includes `employed as` (only about 3 instances?) - maybe separate these out
 - named children included (if they have a date of birth) as well as `had child in`
