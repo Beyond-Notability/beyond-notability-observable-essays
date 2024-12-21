@@ -73,9 +73,7 @@ import {hadChildrenAgesChart} from "./components/mothers.js";
 
 const hadChildrenAges = FileAttachment("data/l_women_children/had-children-ages.csv").csv({typed: true});
 
-//const workServedYearsWithChildren = FileAttachment("data/l_women_children/work-served-years-with-children.csv").csv({typed:true});
-
-const workServedSpokeYearsWithChildren = FileAttachment("data/l_women_children/work-served-years-with-children.csv").csv({typed:true})
+const workServedSpokeYearsWithChildren = FileAttachment("data/l_women_children/work-served-spoke-years-with-children.csv").csv({typed:true})
 
 const lastAges = FileAttachment("data/l_women_children/last-ages-all.csv").csv({typed:true});
 

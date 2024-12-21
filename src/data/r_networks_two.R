@@ -1,6 +1,165 @@
-###############################
-#### setting up events :-S ####
-###############################
+#########################
+## network functions ####
+#########################
+
+library(tidygraph)
+
+# create an undirected tbl_graph using person id as node id ####
+# n = nodes list, e = edges list. need to be in the right sort of format! 
+bn_tbl_graph <- function(n, e){
+  tbl_graph(
+    nodes= n,
+    edges= e,
+    directed = FALSE,
+    node_key = "person"
+  )
+}
+
+
+
+
+## new function to dedup repeated pairs after doing joins
+make_edge_ids <- function(data){
+  data |>
+  # make std edge1-edge2 ordering numerically. (don't really need names? that's nodes metadata too really)
+  mutate(across(c(from, to), ~str_remove(., "Q"), .names="{.col}_n")) |>
+  mutate(across(c(from_n, to_n), parse_number)) |>
+  # standard from_to id according to which is lower number, for deduping repeated pairs
+  mutate(edge_id = case_when(
+    from_n<to_n ~ glue("{from}_{to}"),
+    to_n<from_n ~ glue("{to}_{from}")
+  )) |>
+  mutate(edge1 = case_when(
+    from_n<to_n ~ from,
+    to_n<from_n ~ to
+  )) |>
+  mutate(edge2 = case_when(
+    from_n<to_n ~ to,
+    to_n<from_n ~ from
+  )) |>
+  select(-from_n, -to_n)
+}
+
+
+
+
+# network has to be a tbl_graph
+# must have weight col, even if all the weights are 1.
+# centrality scores: degree, betweenness, [closeness], harmony, eigenvector. 
+bn_centrality <- function(network){
+  network |>
+    # tidygraph fixes renumbering for you... but keep bn ids anyway.
+  filter(!node_is_isolated()) |>
+  # just two centrality measures this time.
+    mutate(degree = centrality_degree(weights=weight),
+           betweenness = centrality_betweenness(weights=weight) # number of shortest paths going through a node
+    )  |>
+    # make rankings. invert ranks so top=largest.
+    mutate(across(c(degree, betweenness),  ~min_rank(desc(.)), .names = "{.col}_rank"))  
+}
+
+
+
+# community detection
+# doing unweighted; seemed to work better for events?
+# run this *after* centrality function otherwise you might need isolated filter
+
+bn_clusters <- function(network){
+  network |>
+    #mutate(grp_edge_btwn = as.factor(group_edge_betweenness(directed=FALSE))) |> # v v slow for SAL but ok for events.
+    mutate(grp_infomap = as.factor(group_infomap())) |>  
+    mutate(grp_leading_eigen = as.factor(group_leading_eigen())) 
+    #mutate(grp_louvain = as.factor(group_louvain()))  |>
+    #mutate(grp_walktrap = as.factor(group_walktrap())) 
+}
+
+
+
+
+
+###########################
+## metadata for people ####
+###########################
+
+# this should be the tidied up version...
+## don't really need gender because both networks are women only, but part of pipeline for other networks. keep it but just get women.
+
+# list of all the named people (not just women) with gender  
+bn_gender_sparql <-
+  'SELECT DISTINCT ?person ?personLabel 
+WHERE {  
+  ?person bnwdt:P3 bnwd:Q3 .
+  FILTER NOT EXISTS {?person bnwdt:P4 bnwd:Q12 .} #filter out project team 
+  SERVICE wikibase:label {bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en-gb,en".}
+}
+order by ?personLabel'
+
+bn_gender_query <-
+  bn_std_query(bn_gender_sparql) |>
+  make_bn_ids(person) 
+
+bn_gender <-
+  bn_gender_query |>
+  rename(name = personLabel)
+
+
+
+# dates
+
+## this is not the all-the-dates query (but it could be)
+bn_dates_sparql <-
+'SELECT distinct ?person (year(?dod) as ?year_death) (year(?dob) as ?year_birth) ?s
+  WHERE {
+   ?person bnwdt:P12 bnwd:Q2137 . #humans
+   FILTER NOT EXISTS { ?person bnwdt:P4 bnwd:Q12 . } # not project team
+   
+  optional { ?person bnwdt:P15 ?dod .   }
+  optional { ?person bnwdt:P26 ?dob .   }
+    
+} # /where
+ORDER BY ?person ?date'
+
+bn_dates_query <-
+  bn_std_query(bn_dates_sparql) |>
+  make_bn_ids(c(person, s))  
+
+
+# there is still the occasional dup on year i think
+bn_birth_dates <-
+bn_dates_query |>
+  filter(!is.na(year_birth)) |> 
+  distinct(person, year_birth) |>
+  group_by(person) |>
+  arrange(year_birth, .by_group = T) |>
+  top_n(-1, row_number()) |>
+  ungroup() 
+
+# dod seems fine on year, but don't assume it'll stay that way
+bn_death_dates <-
+bn_dates_query |>
+  filter(!is.na(year_death)) |>
+  distinct(person, year_death)|>
+  group_by(person) |>
+  arrange(year_death, .by_group = T) |>
+  top_n(-1, row_number()) |>
+  ungroup() 
+
+
+
+bn_person_list <-
+bn_gender |>
+  left_join(bn_birth_dates, by="person") |>
+  left_join(bn_death_dates, by="person") 
+
+
+
+
+
+###########################
+#### setting up events ####
+###########################
+
+## some of this may not really be needed here... but I can't face going through it all again to find out what/if I could simplify.
 
 # organised by (P109): union query for linked event pages or in quals, excluding human organisers. atm all are items.
 # slightly trimmed version to speed up query as you don't need claim . don't even really need ?person.
@@ -147,13 +306,10 @@ bn_women_ppa_qual_inst_query <-
   semi_join(bn_women_events, by="s")
 
 
-# why precision?
-# this is quite similar to qualifiers query in dates.r (though that's more general) - see if you can consolidate them later.
-# fetching date_prop makes the query a *lot* slower, so get R to turn the prop IDs into labels instead.
+## fetching date prop labels makes the query a *lot* slower, so get R to turn the prop IDs into labels instead.
 
 bn_women_events_time_precision_sparql <-
-'SELECT distinct ?person ?date ?date_precision ?pq ?pqv  ?s  ?ppa  
-#?prop ?date_prop ?date_propLabel 
+'SELECT distinct ?person ?date ?date_precision ?pq ?pqv  ?s  ?ppa   
 
 WHERE {  
   ?person bnwdt:P3 bnwd:Q3 .
@@ -169,12 +325,7 @@ WHERE {
       ?s (bnpqv:P1 | bnpqv:P27 | bnpqv:P28 ) ?pqv.
       ?s ?pq ?pqv .
           ?pqv wikibase:timeValue ?date .  
-          ?pqv wikibase:timePrecision ?date_precision .
-     
-  # this really slows down the query, just for the sake of the property labels. ?
-  #      ?s ?pq ?date .   
-  #        ?date_prop wikibase:qualifier ?pq .
-  #        ?date_prop wikibase:propertyType wikibase:Time.  
+          ?pqv wikibase:timePrecision ?date_precision .  
   
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en,en-gb". } 
 }
@@ -190,7 +341,6 @@ bn_women_events_time_precision_query <-
   bn_events_time_precision_fetched |>
   make_bn_item_id(person) |>
   make_bn_ids(c(ppa, pq, pqv, s)) |>
-  #make_bn_ids(c(prop, ppa, date_prop, pqv, s)) |>
   make_date_year() |>
   mutate(date_propLabel = case_when(
     pq=="P1" ~ "point in time",
@@ -203,7 +353,7 @@ bn_women_events_time_precision_query <-
 
 bn_women_events_dates <-
   bn_women_events_time_precision_query |>
-  # you need to keep the date as well as the precision when you pivot, to join. c() in values_from
+  # need to keep date as well as the precision when you pivot, to join. c() in values_from
   # start/end pivot to a single row
   filter(date_prop %in% c("P27", "P28")) |>
   pivot_wider(names_from = date_propLabel, values_from = c(date_precision, date), id_cols = s) |>
@@ -235,7 +385,7 @@ bn_women_events |>
               # of (item/free text)
               filter(qual_p %in% c("P78", "P66")) |>
               anti_join(bn_women_events |> filter(event_id=="Q3644"), by="s") |> # exclude CAS AGM of 
-              distinct(s, qual_p, qual_label, qual_value, qual_valueLabel) |> # do i need distinct? possibly not.
+              distinct(s, qual_p, qual_label, qual_value, qual_valueLabel) |>
               # ensure you have only 1 per stmt. these are all spoke_at; are they the ones with multiple papers?
               group_by(s) |>
               top_n(1, row_number()) |>
@@ -262,11 +412,6 @@ bn_women_events_of_dates <-
 
 
 
-# before adding organised_by
-# # watch out for manytomany warning. caused by multiple orgs in of. top_n as a quick hack to get rid. there are only a handful.
-# bn_women_events_of_dates <-
-
-
 bn_women_events_of_dates_types_all <-
 bn_women_events_of_dates |>
   # add i/o that are generic event types meeting/conference/exhibition - shouldn't dup... if it does will need to turn this into a separate step
@@ -276,13 +421,6 @@ bn_women_events_of_dates |>
       distinct(qual, qual_instance, qual_instanceLabel) |>
       rename(instance_id=qual_instance, instance=qual_instanceLabel), by=c("event_id"="qual")
   ) |>
-  # # add other i/o - started to dup. see how you get on without it.  mostly will be orgs....
-  # left_join(
-  #   bn_women_ppa_qual_inst_query |>
-  #     filter(!qual_instanceLabel %in% c("meeting", "conference", "exhibition", "event", "bucket", "locality", "venue")) |>
-  #     distinct(qual, qual_instance, qual_instanceLabel) |>
-  #     rename(instance2_id=qual_instance, instance2=qual_instanceLabel), by=c("event_id"="qual")
-  # )  |>
   # add directly available locations
   left_join(
     bn_women_events_qualifiers |>
@@ -299,8 +437,7 @@ bn_women_events_of_dates |>
     .default = ppa_label
   )) |>
   relocate(ppa_type, .after = ppa)  |>
-  
-  # make event type. adjusted to do more as you dropped second i/o join. tweak for F.S.
+  # make event type. tweak for F.S.
   mutate(event_type = case_when(
     event %in% c("meeting", "exhibition", "conference") ~ event,
     event_id=="Q292" & is.na(of_org) ~ "meeting",  # folklore society not specified as meetings, but they almost certainly are
@@ -368,11 +505,7 @@ bn_women_events_of_dates |>
     event_type %in% c("misc", "meeting", "other") ~ as.character(date), # should i make this month?
     event_type %in% c("conference", "exhibition") ~ paste0(year, "-01-01")
   ))  |>
-  
-# NB: there is no event_of_id now; event_org_id instead.
-  # id columns for convenience
-  # mutate(event_instance_id = paste(event_instance_date, event_id, of_id, sep="_"))  |>
-  # mutate(event_of_id = paste(event_id, of_id, sep="_")) |>
+
   mutate(event_instance_id = paste(event_instance_date, org_id, event_type, sep="_"))  |>
   
   # hmm, this may not quite work. and might need a bit of extra work for CAS etc. 
@@ -381,19 +514,18 @@ bn_women_events_of_dates |>
     event %in% c("exhibition", "meeting", "event", "conference", "Annual Meeting", "petition") & is.na(of_org) & !is.na(year) ~ paste(org_id, event_type, year, sep="_"),
     # otherwise exclude date info
     .default =  paste(org_id, event_type, sep="_"))
-         
-         ) |>
+    ) |>
   relocate(event_title, event_type, year, event_instance_date, event_org, org_id, event_instance_id, event_org_id, of_org, of_org_id, .after = ppa_type) 
   
 bn_women_events_of_dates_types <-
 bn_women_events_of_dates_types_all |>
-  # losing ppa_label, but keep ppa in case you need any joins. just bear in mind slight difference.
+  # losing ppa_label, but keep ppa in case you need any joins. bear in mind slight difference.
   # also dropping separate organised by and of cols.
   distinct(bn_id, personLabel, ppa_type, ppa, event_title, event_type, year, event_instance_date, event_org, org_id, event_instance_id, event_org_id, dob, yob)
 
 
 # unique event instances based on the workings
-# but this is probably not quite right because it includes too much stuff incl title in group by
+# probably not quite right because it includes too much stuff incl title in group by
 bn_women_event_instances <-
 bn_women_events_of_dates_types_all |>
   group_by(event_instance_id, event_org_id, event_title, event_type, event_org, event, of_org, event_id, of_org_id, event_instance_date, year) |>
@@ -727,46 +859,7 @@ bn_group_network <-
   bn_tbl_graph(bn_group_nodes, bn_group_edges) |>
   #filter(!node_is_isolated()) |> not needed if using bn_centrality
   bn_centrality() 
-#  bn_clusters()
   
-
-
-
-# make events d3 version of nodes and edges
-# maybe it will be easier ot just have 3 datasets
-
-#bn_events_nodes_d3 <-
-#bn_events_network |>
-#  activate(nodes) |>
-#  as_tibble() |>
-  # keep some of the all data for all for the moment, so it won't break completely...
-#  #select(person, nn, degree, grp_infomap, group) |>
-#  inner_join(bn_person_list, by="person") |>
-#  mutate(name_label = if_else(degree>3, name, NA)) |>
-#  #add nodes metadata. still need groups.
-#  #left_join(bn_nodes_meta, by="person") |>
-#  mutate(id=person) |>
-#  relocate(id) |>
-#  arrange(name)
-
-
-
-#bn_events_edges_d3 <-
-#bn_events_network |>
-#  activate(edges) |>
-#  as_tibble() |>
-#  select(edge1, edge2, weight) |>
-#  #left_join(bn_edges_meta, by=c("edge1", "edge2")) |>
-#  rename(source=edge1, target=edge2)
-
-
-# put in named list ready to write_json  
-#bn_events_json <-
-#list(
-#     nodes= bn_events_nodes_d3,
-#     links= bn_events_edges_d3
-#     )  
-
 
 
 
@@ -818,9 +911,8 @@ bn_group_network |>
 
 
 
-#### under construction! ####
+#### make meta ####
 
-# make meta. not sure if htis will work.
 
 bn_nodes_meta <-
   # you don't want to include all at this point.
@@ -915,7 +1007,3 @@ list(
      )  
      
     
-#bn_two_nodes_meta_json <-
-#bind_rows(
-#  bn_events_nodes_for_meta, bn_served_nodes_for_meta, bn_group_nodes_for_meta) |>
-#  rename(id=person)

@@ -159,7 +159,6 @@ export function educatedYearsChart(data, {width}, titleYear, plotHeight) {
       // DOTS
       
  			// educated at fill years for start/end pairs. draw BEFORE single points.
- 			// Q is there any way to do this so the fill looks like joined up lines rather than dots? esp. as spacing is different in the two views
  			
       Plot.dot(
       	data, {
@@ -230,11 +229,9 @@ export function educatedYearsChart(data, {width}, titleYear, plotHeight) {
     			y: "person_label", // can you really not give this a label?
       	  filter: (d) =>  d.year_type !="filled"  &	d.src=="degrees", 
     			anchor:"top-left",
-    			//frameAnchor:"right",
     			dx:6,
     			dy:6,
     			channels: {
-      		//woman: "person_label",
     			"event type":"src",
     			"event year": "year",
       		"year of birth":"bn_dob_yr", 
@@ -245,8 +242,6 @@ export function educatedYearsChart(data, {width}, titleYear, plotHeight) {
       		format: {
       			x:false, 
       			y:false,
-      			//woman: true,
-      			// make these go first, do formatting
       			"event type":true,
       			"event year": (d) => `${d}`, 
       			"year of birth": (d) => `${d}`,
@@ -275,8 +270,6 @@ export function educatedYearsChart(data, {width}, titleYear, plotHeight) {
       		format: {
       			x:false, 
       			y:false,
-      			//woman: true,
-      			// make these go first, do formatting
       			"event type":true,
       			"event year": (d) => `${d}`, 
       			"year of birth": (d) => `${d}`,
@@ -296,7 +289,7 @@ export function educatedYearsChart(data, {width}, titleYear, plotHeight) {
 export function educatedAgesChart(data, {width}, titleAge, plotHeight) {
 
   return Plot.plot({
-    title: titleAge, // "higher education and age (ordered by date of birth)",
+    title: titleAge, 
     width,
     height: plotHeight,
     marginTop: plotMarginTop,

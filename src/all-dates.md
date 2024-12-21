@@ -50,14 +50,14 @@ Indeed, places of residence - as we [expand on in a dedicated essay](https://bey
 
 const plotTitle = "(Almost) every date as a dot";
 
-const plotHeight = 2000;
+const plotHeight = 2300;
 ```
 
 
 
 ```js
 // Import components
-import {datesChartY} from "./components/allTheDates2.js";
+import {datesChartY} from "./components/allTheDates.js";
 ```
 
 
@@ -66,16 +66,4 @@ import {datesChartY} from "./components/allTheDates2.js";
 const dates = FileAttachment("./data/l_dates_precise_all.csv").csv({typed: true});
 ```
 
-<!-- 
-data variables
-precise
-"person"          "personLabel"     
-"date"            "year"    "month"           "day"             "m"              
-"nice_date"       
-"date_precision"  "date_certainty" 
-"date_label"      "date_level"      "date_string"    "qual_date_prop" 
-"date_propLabel" "date_prop"   "prop_label"     "category"         
-"prop_valueLabel"  "prop_value" 
-"s"  
--->
 

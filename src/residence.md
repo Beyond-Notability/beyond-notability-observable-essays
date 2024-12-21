@@ -90,10 +90,6 @@ const datesResidedAges = FileAttachment("./data/l_resided_at/dates-ages.csv").cs
 
 const resided = FileAttachment("./data/l_resided_at/resided.csv").csv({typed: true})
 
-//const residedDated = FileAttachment("./data/l_resided_at/resided-dated.csv").csv({typed: true})
-
 const datesResidedEarlyLate = FileAttachment("./data/l_resided_at/dates-resided-early-late.csv").csv({typed: true})
-
-//const datesResidedOther = FileAttachment("./data/l_resided_at/dates-resided-other.csv").csv({typed: true})
 
 ```
