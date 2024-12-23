@@ -1,15 +1,14 @@
 ---
 theme: dashboard
-title: Todo and Notes
+title: Notes
 toc: true
 ---
 
 
 
-Todo
-----
 
-general tech credits
+General credits
+----------
 
 Observable and D3 (site generator and visualisations)
 
@@ -23,17 +22,17 @@ R (data wrangling)
 - [Tidyverse](https://www.tidyverse.org/)
 
 
-Networks
 
-- more info in tooltips
-- toggle node size between degree and betweenness centrality (maybe) (will need to use rankings rather than measures, might not work)
 
+Todo
+----
+
+Networks - more info in tooltips if possible (but of course this is harder than expected)
 
 
 Childbirth notes
-----------
 
-some of these conflict slightly with text so don't remove yet...
+looks like some of these conflict slightly with text so need to review, don't remove yet...
 
 - work includes `employed as` (only about 3 instances?) - maybe separate these out
 - named children included (if they have a date of birth) as well as `had child in`

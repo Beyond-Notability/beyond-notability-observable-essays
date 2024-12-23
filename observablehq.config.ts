@@ -11,16 +11,20 @@ export default {
   // lets you organize them into sections and have unlisted pages.
   // not essential if the cleanUrls setting works (not available in early versions)
   
-//  pages: [
-//    {
-//      name: "Pages",
-//      pages: [
-//      //  {name: "Events", path: "/example-dashboard"},
-//        {name: "Women at Events", path: "/women-event-types.html"},
-//        {name: "Event Types", path: "/event-types.html"}
-//      ]
-//    }
-//  ],
+  pages: [
+    {
+      name: "Pages",
+      pages: [
+        {name: "All the Dates", path: "/all-dates.html"},
+        {name: "Education", path: "/education.html"},
+        {name: "Motherhood", path: "/motherhood.html"},
+        {name: "Residence", path: "/residence.html"},
+        {name: "Networks", path: "/networks.html"},
+        {name: "Project Links", path: "/project-links.html"},
+        {name: "Notes", path: "/notes.html"},
+      ]
+    }
+  ],
 
 
   // Content to add to the head of the page, e.g. for a favicon:

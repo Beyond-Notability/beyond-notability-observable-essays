@@ -83,6 +83,9 @@ Plot.legend({
 ```
 ```js
 // END OF FILTERS CODE.
+
+//weightData
+
 ```
 
 
@@ -290,7 +293,8 @@ const height = 700
   const mouseOverFunction = (event, d) => {
     tooltip.style("visibility", "visible")
     .html(() => {
-        const content = `${d.name}<br/>${d.nn} appearances`;
+// info changes with group? nn is all appearances.   	
+        const content = `${d.name} (${d.id})<br/>${d.nn} appearances`;
         return content;
       });
 
