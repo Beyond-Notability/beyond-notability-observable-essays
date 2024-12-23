@@ -17,7 +17,7 @@ export default {
       pages: [
         {name: "All the Dates", path: "/all-dates.html"},
         {name: "Education", path: "/education.html"},
-        {name: "Motherhood", path: "/motherhood.html"},
+        {name: "Motherhood", path: "/mothers.html"},
         {name: "Residence", path: "/residence.html"},
         {name: "Networks", path: "/networks.html"},
         {name: "Project Links", path: "/project-links.html"},
