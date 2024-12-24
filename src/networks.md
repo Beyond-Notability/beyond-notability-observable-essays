@@ -293,8 +293,8 @@ const height = 700
   const mouseOverFunction = (event, d) => {
     tooltip.style("visibility", "visible")
     .html(() => {
-// info changes with group? nn is all appearances.   	
-        const content = `${d.name} (${d.id})<br/>${d.nn} appearances`;
+// info changes with group. nn is always all appearances.  nnn includes text atm.	
+        const content = `${d.name} (${d.id})<br/>${d.nnn_label}<br/>${d.degree} connections`;
         return content;
       });
 
@@ -489,13 +489,13 @@ const tooltip = d3.select("body").append("div")
 ```js
 
 function getRadius(useCasesCount){
-    var m=useCasesCount/3
-    var d=3/useCasesCount
-  if(useCasesCount>=6){   
-    var radius = m+d  
-    return radius
+    var m=useCasesCount/3.5; 
+    
+  if(useCasesCount>5){   
+    var radius = m+4;  
+    return radius;
   }
-  return 6
+  return 5;
 }
 
 
@@ -573,13 +573,16 @@ const json = FileAttachment("./data/l_networks_two/bn-two-networks.json").json()
 // prepare data for first filter
 // it feels like there ought to be a better way to add *_degree and suchlike to be usable, but this is the one I can work out how to do, so.
 
+
 const dataNodes =
 json.nodes
   .map((d) => (
     {...d, 
       both_degree: d.all[0].degree ,
       events_degree: (d.events[0] != undefined) ? d.events[0].degree : [] ,
-      committees_degree: (d.committees[0] != undefined ) ? d.committees[0].degree : []   
+      committees_degree: (d.committees[0] != undefined ) ? d.committees[0].degree : []  ,
+      events_nn: (d.events[0] != undefined) ? d.events[0].nn : [] ,
+      committees_nn: (d.committees[0] != undefined) ? d.committees[0].nn : [] 
   })) 
 
 // don't need to do anything to json.links at this stage
@@ -601,10 +604,12 @@ data.nodes
       )
       // select the right degree for the network.
   .map((d) => ({...d,
-      degree: // can rename this once you get rid of toplevel stuff
+      degree: // can reuse this once you get rid of toplevel stuff
       (pickGroup==="committees") ? d.committees_degree :  
       (pickGroup=="events") ? d.events_degree :  
-      d.both_degree  
+      d.both_degree  ,
+      nnn: (pickGroup==="committees") ? d.committees_nn :	(pickGroup=="events") ? d.events_nn : d.nn,
+      nnn_label: (pickGroup==="committees") ? d.committees_nn + " " + pickGroup : (pickGroup=="events") ? d.events_nn + " " + pickGroup : d.nn + " appearances"
   })) 
 
 const groupLinks = data.links.filter(
