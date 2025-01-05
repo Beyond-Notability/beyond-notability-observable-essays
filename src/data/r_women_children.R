@@ -110,7 +110,7 @@ WHERE {
   ?person bnwdt:P3 bnwd:Q3 . # women
   
   # work activities: held position / held position (free text) /  employed as
-  ?person (bnp:P17|bnp:P48|bnp:P105 ) ?s .  
+  ?person (bnp:P17|bnp:P48 |bnp:P105) ?s .  
      ?s (bnps:P17 | bnps:P48 | bnps:P105 ) ?position .  
      ?s ?work ?position . 
     

@@ -9,3 +9,4 @@ source("./src/data/r_networks_two.R")
 setwd(tempdir())
 write_json(bn_two_json, "bn-two-networks.json")
 system("zip - -r .")
+

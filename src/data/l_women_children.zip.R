@@ -3,9 +3,6 @@ source("./src/data/shared.R")
 
 source("./src/data/r_women_children.R")
 
-
-
-
 # Add to zip archive, write to stdout
 setwd(tempdir())
 write_csv(bn_had_children_ages, "had-children-ages.csv", na="")

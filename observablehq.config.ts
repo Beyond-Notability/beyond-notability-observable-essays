@@ -13,7 +13,7 @@ export default {
   
   pages: [
     {
-      name: "Pages",
+      name: "",
       pages: [
         {name: "All the Dates", path: "/all-dates.html"},
         {name: "Education", path: "/education.html"},
@@ -28,8 +28,15 @@ export default {
 
 
   // Content to add to the head of the page, e.g. for a favicon:
-  head: '<link rel="icon" href="./static/profile.jpg" type="image/jpg">',
 
+		head: ({path, title}) => `<link rel="canonical" href="https://beyond-notability.github.io/beyond-notability-observable-essays${path}.html">
+<meta name="citation_authors" content="Howard, Sharon; Baker, James"/>
+<meta name="og:title" content="${title}"/>
+<meta name="citation_date" content="2025"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Beyond Notability Data Essays" />
+<link rel="icon" href="./static/profile.jpg" type="image/jpg"/>
+`,
 
   // Some additional configuration options and their defaults:
   // theme: "default", // try "light", "dark", "slate", etc.

@@ -67,8 +67,8 @@ bn_centrality <- function(network){
 bn_clusters <- function(network){
   network |>
     #mutate(grp_edge_btwn = as.factor(group_edge_betweenness(directed=FALSE))) |> # v v slow for SAL but ok for events.
-    mutate(grp_infomap = as.factor(group_infomap())) |>  
-    mutate(grp_leading_eigen = as.factor(group_leading_eigen())) 
+    mutate(grp_infomap = as.factor(group_infomap()) ) |>  
+    mutate(grp_leading_eigen = as.factor(group_leading_eigen()) ) 
     #mutate(grp_louvain = as.factor(group_louvain()))  |>
     #mutate(grp_walktrap = as.factor(group_walktrap())) 
 }
@@ -171,8 +171,8 @@ bn_organised_by_sparql <-
 
 WHERE {  
   ?person bnwdt:P3 bnwd:Q3 .
-  ?person ( bnp:P71 | bnp:P24 | bnp:P72 | bnp:P23 | bnp:P13 | bnp:P120  ) ?s . # | bnp:P113
-    ?s ( bnps:P71 | bnps:P24 | bnps:P72 | bnps:P23 | bnps:P13 | bnps:P120  ) ?ev .  # | bnps:P113
+  ?person ( bnp:P71 | bnp:P24 | bnp:P72 | bnp:P23 | bnp:P13 | bnp:P120 | bnp:P113 ) ?s . # 
+    ?s ( bnps:P71 | bnps:P24 | bnps:P72 | bnps:P23 | bnps:P13 | bnps:P120  | bnps:P113 ) ?ev .  #
    
   # ?person ?p ?s .
   #     ?prop wikibase:claim ?p;      
@@ -208,8 +208,8 @@ bn_women_events_sparql <-
 
 WHERE {  
   ?person bnwdt:P3 bnwd:Q3 .
-  ?person ( bnp:P71 | bnp:P24 | bnp:P72 | bnp:P23 | bnp:P13 | bnp:P120  ) ?s . # | bnp:P113
-    ?s ( bnps:P71 | bnps:P24 | bnps:P72 | bnps:P23 | bnps:P13 | bnps:P120  ) ?ppa .  # | bnps:P113
+  ?person ( bnp:P71 | bnp:P24 | bnp:P72 | bnp:P23 | bnp:P13 | bnp:P120 | bnp:P113 ) ?s . # 
+    ?s ( bnps:P71 | bnps:P24 | bnps:P72 | bnps:P23 | bnps:P13 | bnps:P120  | bnps:P113 ) ?ppa .  #
    
   ?person ?p ?s .
       ?prop wikibase:claim ?p.      
@@ -313,8 +313,8 @@ bn_women_events_time_precision_sparql <-
 
 WHERE {  
   ?person bnwdt:P3 bnwd:Q3 .
-  ?person ( bnp:P71 | bnp:P24 | bnp:P72 | bnp:P23 | bnp:P13 | bnp:P120  ) ?s .  # | bnp:P113
-    ?s ( bnps:P71 | bnps:P24 | bnps:P72 | bnps:P23 | bnps:P13 | bnps:P120  ) ?ppa .  # | bnps:P113
+  ?person ( bnp:P71 | bnp:P24 | bnp:P72 | bnp:P23 | bnp:P13 | bnp:P120 | bnp:P113  ) ?s .  #
+    ?s ( bnps:P71 | bnps:P24 | bnps:P72 | bnps:P23 | bnps:P13 | bnps:P120 | bnps:P113  ) ?ppa .  #
    
   # dont need any of this
   # ?person ?p ?s .
