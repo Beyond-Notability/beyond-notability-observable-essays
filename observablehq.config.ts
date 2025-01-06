@@ -30,8 +30,8 @@ export default {
   // Content to add to the head of the page, e.g. for a favicon:
 
 		head: ({path, title}) => `<link rel="canonical" href="https://beyond-notability.github.io/beyond-notability-observable-essays${path}.html">
+<meta property="og:title" content="${title}"/>
 <meta name="citation_authors" content="Howard, Sharon; Baker, James"/>
-<meta name="og:title" content="${title}"/>
 <meta name="citation_date" content="2025"/>
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="Beyond Notability Data Essays" />
