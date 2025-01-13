@@ -47,7 +47,7 @@ So, what is shown if we focus on education data and plot it in this way?
 
 ## Towards Research Questions
 
-Two of the research questions that [Beyond Notability]https://beyondnotability.org/) started out with are useful here for drilling into the plot. 
+Two of the research questions that [Beyond Notability](https://beyondnotability.org/) started out with are useful here for drilling into the plot. 
 
 1. What was the nature, scale and distribution of women's work in these fields?
 2. What do the records reveal about the extent and character of women's intellectual networks and how these facilitated or constrained their activities?
