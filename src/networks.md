@@ -20,7 +20,7 @@ For 'Committee' data, we chose to create a networkable connection when two peopl
 
 Conflations and assumptions notwithstanding this gave us something we could visualise as a network: the connections between people created by their participation at events and service on committees.
 
-## Visualising a Networks 
+## Visualising a Network
 
 Network visualisations (often referred to as network graphs) require a little explanation before we can dig into what they might tell us. In this case we note the following features:
 
