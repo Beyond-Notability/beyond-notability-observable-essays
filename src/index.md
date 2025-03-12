@@ -52,7 +52,7 @@ toc: false
 
 
 ---
-These data essays were written in Autumn/Winter 2024 as an output of the [Beyond Notability](https://beyondnotability.org/) project, funded between 2021 and 2024 by the [Arts and Humanities Research Council](https://www.ukri.org/councils/ahrc/), UK (Project Reference [AH/V01384X/1](https://gtr.ukri.org/projects?ref=AH%2FV01384X%2F1)).
+These data essays were written in Autumn/Winter 2024 as part of the [Beyond Notability](https://beyondnotability.org/) project, funded between 2021 and 2024 by the [Arts and Humanities Research Council](https://www.ukri.org/councils/ahrc/), UK (Project Reference [AH/V01384X/1](https://gtr.ukri.org/projects?ref=AH%2FV01384X%2F1)).
 
 Taken together the data essays fulfil a key aim of the project: to experiment with interactive approaches to data recorded in [our wikibase](https://beyond-notability.wikibase.cloud/wiki/Main_Page), a collection of '[linked data](https://en.wikipedia.org/wiki/Linked_data)' about women's work in archaeology, history and heritage between 1870 and 1950. Encompassing over 30,000 statements related to over 900 women, the wikibase forms a major research output of the project.
 
@@ -60,6 +60,6 @@ The data essays can be read in any order. Each digs into a facet of [our wikibas
 
 Suggested citation:
 
-> Sharon Howard and James Baker, *Beyond Notability Data Essays* (https://beyond-notability.github.io/beyond-notability-observable-essays/, 2024)
+> Sharon Howard and James Baker, *Beyond Notability Data Essays* (https://beyond-notability.github.io/beyond-notability-observable-essays/, 2025)
 
 *This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/).*
